@@ -1,0 +1,9 @@
+<div *ngIf="auth.user$ | async as user; else login">
+    {{ user | json }}
+    <button class="button" (click)="auth.signOut()">Sign Out</button>
+</div>
+
+<ng-template #login>
+    <button class="button" (click)="auth.googleSignin()">Login With Google</button>
+    <!-- <button class="button" (click)="auth.facebookSignin()">Login With facebook</button> -->
+</ng-template>
