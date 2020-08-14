@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ratethenews-20e78": {
+      "hosting": {
+        "RateTheNews": [
+          "ratethenews-20e78"
+        ]
+      }
+    }
+  }
+}
