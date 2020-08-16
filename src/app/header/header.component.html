@@ -1,0 +1,30 @@
+<div id="header">
+    <div id='title'><h2>RateTheNews</h2></div>
+    <div id="search-box">
+        <mat-form-field appearance="standard">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix><img src="../../assets/images/search.png"></mat-icon>
+        </mat-form-field>
+    </div>
+    <h4>
+        Browse
+    </h4>
+    <h4>
+        Contact Us
+    </h4>
+    <div id='login'>
+        <div *ngIf="auth.user$ | async as user; else login">
+            {{ user | json }}
+            <!-- <button class="button" (click)="auth.signOut()">Sign Out</button> -->
+            <button mat-flat-button color="warn"  class="button" (click)="auth.signOut()">Sign Out</button>
+        </div>
+        <h4></h4>
+        <ng-template #login>
+            <!-- <button class="button" (click)="auth.googleSignin()">Login With Google</button> -->
+            <button mat-flat-button color="warn"  class="button" (click)="auth.googleSignin()">Login</button>
+            <!-- <button class="button" (click)="auth.facebookSignin()">Login With facebook</button> -->
+        </ng-template>
+    </div>
+</div>
+
