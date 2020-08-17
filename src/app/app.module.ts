@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import {MatDialogModule} from '@angular/material/dialog'; 
 import {MatIconModule} from '@angular/material/icon';
 import { RegisterComponent } from './register/register.component'; 
+import { MaterialModule } from './material/material/material.module';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { RegisterComponent } from './register/register.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
@@ -43,9 +45,7 @@ import { RegisterComponent } from './register/register.component';
     MatDialogModule,
     MatIconModule
   ],
-  providers: [
-    
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

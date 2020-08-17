@@ -33,3 +33,16 @@ h4{
 #register-btn{
     margin-left: 20px;
 }
+ul.menu li {
+  display: inline;
+}
+.menu {
+  list-style-type: none;
+}
+.user-profile {
+  display: flex;
+}
+.user-dropdown #displayName {
+  display: inline-block;
+  margin-left: 5px;
+}
