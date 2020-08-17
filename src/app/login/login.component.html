@@ -1,0 +1,25 @@
+<h1>Welcome Back!</h1>
+<p>
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput>
+    </mat-form-field>
+</p>
+<p>
+    <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+</p>
+<p id="login">
+    <button mat-flat-button color="warn"  class="button" >Login</button>
+</p>
+<div id ="other">
+    <h4>Login with:</h4>
+    <img (click)="auth.googleSignin()" src="../../assets/images/google.png">
+    <img src="../../assets/images/facebook.png">
+    <img src="../../assets/images/twitter.png">
+</div>
