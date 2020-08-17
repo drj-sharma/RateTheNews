@@ -1,35 +1,58 @@
-#title {
-  display: inline-block;
+#title{
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translateY(-50%)
 }
-#search-box {
-  margin-left: 30px;
-  margin-right: 100px;
-  vertical-align: middle;
+#search-box{
+   position: absolute;
+   top: 50%;
+   left: 15%;
+   transform: translateY(-50%);
+    display: inline-block;
+    vertical-align: middle;
 }
-app-auth {
-  display: inline-block;
+app-auth{
+    display: inline-block;
 }
-#login {
-  margin-left: 100px;
-  display: inline-block;
+#login{
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    right: 0%;
+    transform: translateY(-50%);
 }
-#header {
-  margin-top: 1em;
-  display: flex;
-  justify-content: space-evenly;
+#header{
+    position: relative;
+    margin-top: 10px;
+    width:80%;
+    margin-right: 10%;
+    margin-left: 10%;
+    align-content: center;
+    height: 100px;
+
 }
-mat-form-field {
-  width: 150%;
+mat-form-field{
+    width:300px;
 }
-h4 {
-  display: inline-block;
-  margin-right: 20px;
+h4{
+    display: inline-block;
+    margin-right: 20px;
+}
+#register-btn{
+    margin-left: 20px;
 }
 ul.menu li {
   display: inline;
 }
 .menu {
+  position: absolute;
+   top: 40%;
+   right :25%;
+   transform: translateY(-50%);
   list-style-type: none;
+  display: inline-block;
 }
 .user-profile {
   display: flex;
@@ -37,4 +60,7 @@ ul.menu li {
 .user-dropdown #displayName {
   display: inline-block;
   margin-left: 5px;
+}
+.user-dropdown{
+  top: 50%
 }

@@ -62,16 +62,8 @@
     </div>
     <h4></h4>
     <ng-template #login>
-      <!-- <button class="button" (click)="auth.googleSignin()">Login With Google</button> -->
-      <button
-        mat-flat-button
-        color="warn"
-        class="button"
-        (click)="auth.googleSignin()"
-      >
-        Login
-      </button>
-      <!-- <button class="button" (click)="auth.facebookSignin()">Login With facebook</button> -->
+      <button mat-flat-button color="warn"  class="button" (click)="openLoginDialog()">Login</button>
+      <button mat-stroked-button color="warn" id="register-btn" (click)="openRegisterDialog()">Register</button>
     </ng-template>
   </div>
 </div>
