@@ -10,9 +10,7 @@ import { AuthComponent } from './auth/auth/auth.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
-import {MatButtonModule} from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MaterialModule } from './material/material/material.module';
 
 
 @NgModule({
@@ -25,13 +23,11 @@ import { MatInputModule } from '@angular/material/input';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
