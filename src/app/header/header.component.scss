@@ -1,32 +1,40 @@
-#title{
-    display: inline-block;
+#title {
+  display: inline-block;
 }
-#search-box{
-    display: inline-block;
-    margin-left: 30px;
-    margin-right: 100px;
-    height: inherit;
-    vertical-align: middle;
+#search-box {
+  margin-left: 30px;
+  margin-right: 100px;
+  vertical-align: middle;
 }
-app-auth{
-    display: inline-block;
+app-auth {
+  display: inline-block;
 }
-#login{
-    margin-left: 100px;
-    display: inline-block;
+#login {
+  margin-left: 100px;
+  display: inline-block;
 }
-#header{
-    margin-top: 10px;
-    width:80%;
-    margin-right: 10%;
-    margin-left: 10%;
-    align-content: center;
-
+#header {
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-evenly;
 }
-mat-form-field{
-    width:300px;
+mat-form-field {
+  width: 150%;
 }
-h4{
-    display: inline-block;
-    margin-right: 20px;
+h4 {
+  display: inline-block;
+  margin-right: 20px;
+}
+ul.menu li {
+  display: inline;
+}
+.menu {
+  list-style-type: none;
+}
+.user-profile {
+  display: flex;
+}
+.user-dropdown #displayName {
+  display: inline-block;
+  margin-left: 5px;
 }

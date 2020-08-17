@@ -63,7 +63,4 @@ export class AuthService {
     };
     return userRef.set(data, { merge: true });
   }
-
-
-
 }
