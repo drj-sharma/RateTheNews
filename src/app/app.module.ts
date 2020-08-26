@@ -11,13 +11,8 @@ import { AuthComponent } from './auth/auth/auth.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
-import {MatButtonModule} from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './login/login.component';
-import {MatDialogModule} from '@angular/material/dialog'; 
-import {MatIconModule} from '@angular/material/icon';
-import { RegisterComponent } from './register/register.component'; 
+import { RegisterComponent } from './register/register.component';
 import { MaterialModule } from './material/material/material.module';
 
 
@@ -38,12 +33,7 @@ import { MaterialModule } from './material/material/material.module';
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    MatDialogModule,
-    MatIconModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
