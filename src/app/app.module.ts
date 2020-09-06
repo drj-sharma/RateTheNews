@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MaterialModule } from './material/material/material.module';
 import {MatTabsModule} from '@angular/material/tabs';
+import { AnchorComponent } from './anchor/anchor.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     HeaderComponent,
     MainComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AnchorComponent
   ],
   imports: [
     BrowserModule,
