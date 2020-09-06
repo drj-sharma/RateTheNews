@@ -1,7 +1,7 @@
 <div id="header">
   <div id="title"><h2>RateTheNews</h2></div>
   <div id="search-box">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="standard">
       <mat-label>Search</mat-label>
       <input matInput placeholder="Placeholder" />
       <mat-icon matSuffix
@@ -27,7 +27,7 @@
       <div class="user-dropdown">
         <div id="user-profile">
           <img
-            [src]="user.photoURL"
+            src={{user.photoURL}}
             style="border-radius: 50%; height: 2.2em;"
             alt="avatar"
           />
