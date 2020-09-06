@@ -36,11 +36,12 @@ export class AuthService {
     const credential = await this.afAuth.signInWithPopup(provider);
     return this.updateUserData(credential.user);
   }
-  // async facebookSignin() {
-  //   const provider = new auth.FacebookAuthProvider();
-  //   const credential = await this.afAuth.signInWithPopup(provider);
-  //   return this.updateUserData(credential.user);
-  // }
+  async facebookSignin() {
+    const provider = new auth.FacebookAuthProvider();
+    const credential = await this.afAuth.signInWithRedirect(provider);
+    // return this.updateUserData(credential.user);
+    // need to add privacy policy URL
+  }
   // signout
   async signOut() {
     await this.afAuth.signOut()
