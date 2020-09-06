@@ -35,7 +35,7 @@ import { AnchorComponent } from './anchor/anchor.component';
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

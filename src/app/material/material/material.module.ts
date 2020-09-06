@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
+import {MatTabsModule} from '@angular/material/tabs';
 
 const material = [
   MatFormFieldModule,
@@ -14,7 +15,8 @@ const material = [
   MatMenuModule,
   MatIconModule,
   MatDialogModule,
-  MatSliderModule
+  MatSliderModule,
+  MatTabsModule
 ];
 
 
