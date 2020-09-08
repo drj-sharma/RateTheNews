@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MaterialModule } from './material/material/material.module';
 import { AnchorComponent } from './anchor/anchor.component';
+import { ArticleModule } from './article/article/article.module';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AnchorComponent } from './anchor/anchor.component';
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ArticleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
