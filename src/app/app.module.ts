@@ -16,6 +16,8 @@ import { RegisterComponent } from './register/register.component';
 import { MaterialModule } from './material/material/material.module';
 import { AnchorComponent } from './anchor/anchor.component';
 import { ArticleModule } from './article/article/article.module';
+import { ReviewCompComponent } from './review-comp/review-comp.component';
+import { WriteReviewComponent } from './write-review/write-review.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { ArticleModule } from './article/article/article.module';
     MainComponent,
     LoginComponent,
     RegisterComponent,
-    AnchorComponent
+    AnchorComponent,
+    ReviewCompComponent,
+    WriteReviewComponent
   ],
   imports: [
     BrowserModule,
