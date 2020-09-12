@@ -18,6 +18,7 @@ import { AnchorComponent } from './anchor/anchor.component';
 import { ArticleModule } from './article/article/article.module';
 import { ReviewCompComponent } from './review-comp/review-comp.component';
 import { WriteReviewComponent } from './write-review/write-review.component';
+import { TvRatingComponent } from './tv-rating/tv-rating.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     RegisterComponent,
     AnchorComponent,
     ReviewCompComponent,
-    WriteReviewComponent
+    WriteReviewComponent,
+    TvRatingComponent
   ],
   imports: [
     BrowserModule,
