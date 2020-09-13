@@ -18,8 +18,9 @@ import { AnchorComponent } from './anchor/anchor.component';
 import { ArticleModule } from './article/article/article.module';
 import { ReviewCompComponent } from './review-comp/review-comp.component';
 import { WriteReviewComponent } from './write-review/write-review.component';
-import { AdminComponent } from './admin/admin.component';
+import { TvRatingComponent } from './tv-rating/tv-rating.component';
 import { FormsModule } from '@angular/forms';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { FormsModule } from '@angular/forms';
     AnchorComponent,
     ReviewCompComponent,
     WriteReviewComponent,
+    TvRatingComponent,
     AdminComponent
   ],
   imports: [
