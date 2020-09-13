@@ -1,0 +1,14 @@
+.admin-section {
+    margin-left: 4vw;
+    margin-right: 4vw;
+    .add-shows {
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center
+    }
+    mat-form-field {
+        width: 50%;
+    }
+}

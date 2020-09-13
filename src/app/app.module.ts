@@ -18,6 +18,8 @@ import { AnchorComponent } from './anchor/anchor.component';
 import { ArticleModule } from './article/article/article.module';
 import { ReviewCompComponent } from './review-comp/review-comp.component';
 import { WriteReviewComponent } from './write-review/write-review.component';
+import { AdminComponent } from './admin/admin.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,11 +32,13 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     RegisterComponent,
     AnchorComponent,
     ReviewCompComponent,
-    WriteReviewComponent
+    WriteReviewComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAnalyticsModule,
