@@ -4,8 +4,8 @@ export interface reviews {
     content?: string;
     user?: string;
     rating?: number;
-    helpfull?: number;
-    nothelpfull?: number;
+    helpful?: number;
+    nothelpful?: number;
     time?: Date;
     show?: string;
 }

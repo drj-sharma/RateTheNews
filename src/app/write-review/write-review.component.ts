@@ -17,8 +17,8 @@ export class WriteReviewComponent implements OnInit {
     content: '',
     user: '',
     rating: 0,
-    helpfull: 0,
-    nothelpfull: 0,
+    helpful: 0,
+    nothelpful: 0,
     time: this.date,
     show:''
   };
