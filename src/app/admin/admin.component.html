@@ -1,0 +1,32 @@
+<div class="admin-section">
+  <div class="add-shows">
+    <h1>Add News Show</h1>
+    <hr />
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="show.title" type="text" />
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Enter Description" type="text" [(ngModel)]="show.description"></textarea>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>TV Channel</mat-label>
+        <input matInput type="text" [(ngModel)]="show.tv_channel"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Anchor</mat-label>
+        <input matInput type="text" [(ngModel)]="show.anchor"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Timings</mat-label>
+        <input matInput type="time" [(ngModel)]="show.timings"/>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Length</mat-label>
+        <input matInput type="text" [(ngModel)]="show.length"/>
+      </mat-form-field>
+      <input type="file">
+      <button mat-raised-button (click)="submitShow(show)">Submit</button>
+  </div>
+</div>
