@@ -4,27 +4,20 @@
         <h2>User Reviews</h2>
         <button mat-flat-button color="warn" (click)="openDialog()">Write Review</button>
     </div>
-    <div id="review">
-    <div id="rating">
-        <img src="../../assets/images/star.png">
-        <h4>6.5/10</h4>
-        <h4 id="user">User: jxvjkd</h4>
-    </div>
-    <div id="content">
-        <h2>bcyuhvbdjc cbcjesdcsbc cdbsfcj</h2>
-        <p>
-            sokcnsjkbdvcka
-            csdnckmaoscsd
-            csfjdbxnv djx vjdx vfkzjdfkjv djkxf dx n fjkkxf vjkxd csj dv jd xc nkxd snz dcxjnx dxchnxd dzxd cn x dvndx vjndx v  xv xjvc
-            dvdv hdjx cvjx hj d xchj xb xdcx sdx  sxbx xhjc jxhc hjxccjh xjhc hjx jxn cjxc xj 
-            dsdfvbjjjjjjjjjjjjjjjsdnnjsndkjvbc  xcbsdxdv dd  fb n jn b dc v d b   jndnc  vjndcbd ccdcbc hnnx nc shc cmasc n cn
-            dv bnn c xhvz cbc hndd cxdb nnc jnxcnc  cvn ss cn  cs   nc xxb  xcxx nsbcx  ccs 
-        </p>
-    </div>
-    <div id="helpful">
-        <h4>Was this helpful?</h4>
-        <button mat-button>Yes</button>
-        <button mat-button>No</button>
-    </div>
+    <div id="review" *ngFor="let review of reviews">
+        <div id="rating">
+            <img src="../../assets/images/star.png">
+            <h4>{{ review.rating }}/10</h4>
+            <h4 id="user">User: {{ review.user }}</h4>
+        </div>
+        <div id="content">
+            <h2>{{ review.title }}</h2>
+            <p>{{ review.content }}</p>
+        </div>
+        <div id="helpful">
+            <h4>Was this helpful?</h4>
+            <button mat-button>Yes</button>
+            <button mat-button>No</button>
+        </div>
     </div>
 </div>
