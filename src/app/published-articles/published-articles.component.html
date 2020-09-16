@@ -1,0 +1,129 @@
+<div class="no-article" *ngIf="vis">
+    No Articles Published yet!!! 🤖
+</div>
+
+<div *ngIf="!vis" class="ce-block">
+  <div class="ce-block__content">
+    <ng-container [ngSwitch]="b?.type" *ngFor="let b of data; let i = index">
+      <div class="fxlay">
+        <div fxFlex="92">
+          <!-- Paragraph -->
+          <div *ngSwitchCase="'paragraph'">
+            <div
+              class="ce-paragraph cdx-block"
+              [innerHTML]="b?.data?.text"
+            ></div>
+          </div>
+
+          <!-- List -->
+          <div *ngSwitchCase="'list'">
+            <ul
+              [ngClass]="[
+                'cdx-block',
+                'cdx-list',
+                'cdx-list--' + b?.data?.style
+              ]"
+            >
+              <li
+                class="cdx-list__item"
+                *ngFor="let i of b?.data?.items"
+                [innerHTML]="i"
+              ></li>
+            </ul>
+          </div>
+
+          <!-- Header -->
+          <div
+            style="height: fit-content"
+            *ngSwitchCase="'header'"
+            innerHTML="{{
+              '<h' +
+                b?.data?.level +
+                ' class=ce-header' +
+                '>' +
+                b?.data?.text +
+                '</h' +
+                b?.data?.level +
+                '>'
+            }}"
+          ></div>
+
+          <!-- Image / Video
+                    <div *ngSwitchCase="'image'">
+                        <div class="cdx-block image-tool image-tool--filled" *ngIf="b?.data?.file?.url">
+                            <div class="image-tool__image">
+                                <ng-container *ngIf="isImage(b?.data?.file?.url); else elseTemplate">
+                                    <img (click)="zoomInOut($event)" class="image-tool__image-picture"
+                                        [src]="b?.data?.file?.url">
+                                    <div style="text-align: center; margin-top: 5px;" [innerHTML]="b?.data?.caption">
+                                    </div>
+                                </ng-container>
+
+                                <ng-template #elseTemplate>
+                                    <video class="image-tool__image-picture" autoplay loop controls
+                                        [src]="b?.data?.file?.url'"></video>
+                                    <div style="text-align: center; margin-top: 5px;" [innerHTML]="b?.data?.caption">
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div> -->
+
+          <!-- Embed -->
+          <div *ngSwitchCase="'embed'">
+            <div class="cdx-block embed-tool">
+              <iframe
+                class="embed-tool__content"
+                style="width: 100%"
+                height="320"
+                frameborder="0"
+                allowfullscreen
+                [src]="b?.data?.embed | safe"
+              ></iframe>
+              <div
+                style="text-align: center; margin-top: 5px"
+                [innerHTML]="b?.data?.caption"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Code -->
+          <div *ngSwitchCase="'code'">
+            <div class="cdx-block ce-code">
+              <span style="text-align: right; margin-bottom: 5px">{{
+                b?.data?.language
+              }}</span>
+              <pre><code [innerText]="b?.data?.code"></code></pre>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div *ngSwitchCase="'table'">
+            <div class="tc-editor cdx-block">
+              <div class="tc-table__wrap">
+                <table class="tc-table">
+                  <tbody>
+                    <tr *ngFor="let r of b?.data?.content; let ri = index">
+                      <td
+                        class="tc-table__cell"
+                        *ngFor="let c of r; let ci = index"
+                      >
+                        <div class="tc-table__area">
+                          <div
+                            class="tc-table__inp"
+                            contenteditable="false"
+                            [innerHTML]="b?.data?.content[ri][ci]"
+                          ></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
