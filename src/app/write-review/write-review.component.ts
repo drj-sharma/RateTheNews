@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { reviews } from '../models/reviews';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import * as firebase from "firebase/app";
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-write-review',
@@ -20,10 +20,10 @@ export class WriteReviewComponent implements OnInit {
     helpful: 0,
     nothelpful: 0,
     time: this.date,
-    show:''
+    show: ''
   };
 
-  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) { 
+  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
     this.reviewsCollection = this.afs.collection('show-ratings');
   }
   openSnackBar(msg: string, action: string) {
@@ -35,7 +35,7 @@ export class WriteReviewComponent implements OnInit {
   ngOnInit(): void {
   }
   submitReview(revs: reviews) {
-    var user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
     revs.user = user.uid;
     this.reviewsCollection.add(revs);
     this.openSnackBar('Rating Added Successfully', 'OKAY');
@@ -44,6 +44,4 @@ export class WriteReviewComponent implements OnInit {
   clearFields() {
     this.revs = {};
   }
-
-
 }

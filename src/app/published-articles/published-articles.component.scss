@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond&family=Playfair+Display:wght@500&family=Raleway:ital@1&display=swap");
+.ce-block {
+
+  font-family: "EB Garamond", serif;
+  font-family: "Playfair Display", serif;
+  font-family: "Raleway", sans-serif;
+}
+
+.colorme {
+    color: red;
+}
+.fxlay {
+    margin-left: 20vw;
+    margin-right: 15vw;
+    display: flex;
+    align-items: flex;
+    justify-content: flex-start;
+}
+.header {
+    font-family: "EB Garamond", serif;
+  font-family: "Playfair Display", serif;
+  font-family: "Raleway", sans-serif;
+  font-size: 30px;
+}
+.no-article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vh;
+  font-size: 25px;
+}

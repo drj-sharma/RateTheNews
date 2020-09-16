@@ -21,7 +21,8 @@ import { WriteReviewComponent } from './write-review/write-review.component';
 import { TvRatingComponent } from './tv-rating/tv-rating.component';
 import { FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
-
+import { PublishedArticlesComponent } from './published-articles/published-articles.component';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { AdminComponent } from './admin/admin.component';
     ReviewCompComponent,
     WriteReviewComponent,
     TvRatingComponent,
-    AdminComponent
+    AdminComponent,
+    PublishedArticlesComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ import { AdminComponent } from './admin/admin.component';
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ArticleModule
+    ArticleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
