@@ -23,16 +23,16 @@
 
 <mat-tab-group id="tabs" class="margin1">
     <mat-tab label="Live">
-        <div id='card'>
+        <div id='card' *ngFor="let show of shows" >
             <div id="poster">
-                <img src="../../assets/images/poster1.jpg" alt="" routerLink="tv-rating">
+                <img [src] ='show.image' alt="" id='myimg' routerLink="tv-rating">
             </div>
             <div id="title">
-                <h3>POSTER 1</h3>
+                <h3>{{show.title}}</h3>
             </div>
             <div id="rating">
                 <img src='../../assets/images/star.png'>
-                <h4>7.7</h4>
+                <h4>{{show.rating}}</h4>
             </div>
         </div>
     </mat-tab>

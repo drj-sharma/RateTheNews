@@ -4,6 +4,7 @@ import {WriteReviewComponent} from '../write-review/write-review.component'
 import { LoginComponent } from 'src/app/login/login.component';
 import * as firebase from "firebase/app";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-review-comp',
@@ -11,11 +12,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./review-comp.component.scss']
 })
 export class ReviewCompComponent implements OnInit {
-  a =false;
+  reviews: any[] = [];
 
-  constructor(public dialog: MatDialog,private snackBar: MatSnackBar) { }
+  constructor(public dialog: MatDialog,private snackBar: MatSnackBar,private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.getreviews();
+    
   }
   
   openDialog(){
@@ -36,7 +39,14 @@ export class ReviewCompComponent implements OnInit {
         this.openSnackBar('Login to write review', 'OKAY');
 
       }
-}
+  }
+
+  getreviews(){
+    this.http.get('http://localhost:3000/fetchreviews', {responseType: 'json'}).subscribe((response: any[]) => {
+      this.reviews= response;
+      });
+  }
+
 openSnackBar(msg: string, action: string) {
   this.snackBar.open(msg, action, {
     duration: 2000,
