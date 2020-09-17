@@ -6,4 +6,5 @@ export interface NewsShow {
     anchor?: string;
     timings?: string;
     length?: string;
+    poster?:string;
 }

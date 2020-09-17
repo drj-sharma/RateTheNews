@@ -23,6 +23,9 @@ import { FormsModule } from '@angular/forms';
 import { AdminComponent } from './admin/admin.component';
 import { PublishedArticlesComponent } from './published-articles/published-articles.component';
 import { SafePipe } from './safe.pipe';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { DropzoneDirective } from './dropzone.directive';
+import { UploadTaskComponent } from './upload-task/upload-task.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,9 @@ import { SafePipe } from './safe.pipe';
     TvRatingComponent,
     AdminComponent,
     PublishedArticlesComponent,
-    SafePipe
+    SafePipe,
+    DropzoneDirective,
+    UploadTaskComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +56,7 @@ import { SafePipe } from './safe.pipe';
     HttpClientModule,
     BrowserAnimationsModule,
     ArticleModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

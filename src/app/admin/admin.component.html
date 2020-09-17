@@ -11,22 +11,32 @@
         <textarea matInput placeholder="Enter Description" type="text" [(ngModel)]="show.description"></textarea>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>TV Channel</mat-label>
-        <input matInput type="text" [(ngModel)]="show.tv_channel"/>
-      </mat-form-field>
-      <mat-form-field>
         <mat-label>Anchor</mat-label>
         <input matInput type="text" [(ngModel)]="show.anchor"/>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Timings</mat-label>
-        <input matInput type="time" [(ngModel)]="show.timings"/>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Length</mat-label>
-        <input matInput type="text" [(ngModel)]="show.length"/>
-      </mat-form-field>
-      <input type="file">
+      
+
+      <div class="dropzone" 
+     dropzone
+     (hovered)="toggleHover($event)"
+     (dropped)="onDrop($event)"
+     [class.hovering]="isHovering">
+
+        <h3>AngularFire Drop Zone</h3>
+        <p>Drag and Drop a File</p>
+
+        <div class="file">
+            <label class="file-label">
+              <input class="file-input" type="file" (change)='onDrop($event.target.files)'>
+            </label>
+        </div>
+    </div>
+
+    <h3>Uploads</h3>
+    <div *ngIf="submit">]
+        <upload-task [file]="file" [show]="show"></upload-task>
+    </div>
+
       <button mat-raised-button (click)="submitShow(show)">Submit</button>
   </div>
 </div>

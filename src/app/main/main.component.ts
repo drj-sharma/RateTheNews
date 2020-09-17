@@ -26,21 +26,6 @@ export class MainComponent implements OnInit {
     this.http.get('http://localhost:3000/fetchshows', {responseType: 'json'}).subscribe((response: any[]) => {
       this.shows= response;
       console.log(this.shows);
-      for (const show of this.shows) {
-        var gsReference = this.storage.refFromURL(show.poster);
-        gsReference.getDownloadURL().then(function(url) {
-          console.log(url);
-          show.image= url;
-          console.log(show.image);
-        }).catch(function(error) {
-          // Handle any errors
-        });
-        
-
-      }
       });
-      
-      
-
 }
 }

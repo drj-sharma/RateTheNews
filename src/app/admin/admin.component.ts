@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Component, OnInit} from '@angular/core';
 import { NewsShow } from '../models/NewsShow';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -9,17 +8,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  showCollection: AngularFirestoreCollection<NewsShow>;
+
+  submit: boolean = false;
+
+  isHovering: boolean;
+
+  file: File;
+
   show: NewsShow = {
     title: '',
     description: '',
-    tv_channel: '',
     anchor: '',
-    timings: '',
-    length: ''
+    poster: ''
+
   };
-  constructor(private afs: AngularFirestore, private snackBar: MatSnackBar) {
-    this.showCollection = this.afs.collection('news-shows');
+  constructor( private snackBar: MatSnackBar) {
   }
   openSnackBar(msg: string, action: string) {
     this.snackBar.open(msg, action, {
@@ -29,11 +32,20 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
   }
   submitShow(show: NewsShow) {
-    this.showCollection.add(show);
     this.openSnackBar('Show Added Successfully', 'OKAY');
-    this.clearFields();
+    this.submit = true;
   }
   clearFields() {
     this.show = {};
   }
-}
+
+
+  toggleHover(event: boolean) {
+    this.isHovering = event;
+  }
+
+  onDrop(files: FileList) {
+      this.file = files.item(0)
+  }
+  
+  }
