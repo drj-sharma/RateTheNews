@@ -23,9 +23,9 @@
 
 <mat-tab-group id="tabs" class="margin1">
     <mat-tab label="Live">
-        <div id='card' *ngFor="let show of shows" >
+        <div id='card' *ngFor="let show of shows" [routerLink]="[ 'tv-rating',show.id]">
             <div id="poster">
-                <img [src] ='show.image' alt="" id='myimg' routerLink="tv-rating">
+                <img [src] ='show.poster' alt="" id='myimg' height="300px" width="200px">
             </div>
             <div id="title">
                 <h3>{{show.title}}</h3>
@@ -51,4 +51,4 @@
         </div>
     </mat-tab>
 </mat-tab-group>
-  
+<app-admin></app-admin>

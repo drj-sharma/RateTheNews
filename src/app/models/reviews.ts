@@ -7,5 +7,5 @@ export interface reviews {
     helpful?: number;
     nothelpful?: number;
     time?: Date;
-    show?: string;
+    showid?: string;
 }
