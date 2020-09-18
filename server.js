@@ -40,9 +40,9 @@ app.put("/submitshow", (req, res) => {
 });
 
 
-app.get("/fetchreviews", (req, res) => {
+app.put("/fetchreviews", (req, res) => {
   data = [];
-  db.collection("show-ratings").where("title", "==", 'title')
+  db.collection("show-ratings").where("showid", "==", req.body.showid)
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -72,7 +72,7 @@ app.get("/fetchshows", (req, res) => {
             data.push({title : doc.data().title,
               rating : doc.data().rating,
               poster: doc.data().poster,
-              id: doc.data().id,
+              id: doc.id,
               image: ''})
             console.log(data)
         });

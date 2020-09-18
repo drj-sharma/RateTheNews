@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {WriteReviewComponent} from '../write-review/write-review.component'
 import { LoginComponent } from 'src/app/login/login.component';
 import * as firebase from "firebase/app";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-review-comp',
@@ -13,11 +14,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReviewCompComponent implements OnInit {
   reviews: any[] = [];
+  @Input() id: string;
+  users: any[] = [];
 
-  constructor(public dialog: MatDialog,private snackBar: MatSnackBar,private http: HttpClient) { }
+  constructor(public dialog: MatDialog,private snackBar: MatSnackBar,private http: HttpClient,private db: AngularFirestore) { }
 
   ngOnInit(): void {
-    this.getreviews();
+    this.getreviews();  
     
   }
   
@@ -25,7 +28,11 @@ export class ReviewCompComponent implements OnInit {
     var user = firebase.auth().currentUser;
 
     if (user!= null) {
-        const dialogRef = this.dialog.open(WriteReviewComponent);
+        const dialogRef = this.dialog.open(WriteReviewComponent, {
+          data: {
+            dataKey: this.id
+          }
+        });
 
         dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -42,10 +49,27 @@ export class ReviewCompComponent implements OnInit {
   }
 
   getreviews(){
-    this.http.get('http://localhost:3000/fetchreviews', {responseType: 'json'}).subscribe((response: any[]) => {
+    this.users;
+    var parent = this;
+    this.http.put('http://localhost:3000/fetchreviews',{showid: this.id}, {responseType: 'json'}).subscribe((response: any[]) => {
       this.reviews= response;
+      Object.keys(this.reviews).forEach(function(key) {
+        var docRef = parent.db.collection("users").doc(parent.reviews[key].user);
+        console.log(docRef);
+        docRef.get().toPromise().then(function(doc) {
+            if (doc.exists) {;
+              parent.reviews[key].user = doc.data().displayName;
+
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
       });
-  }
+      });
+}
 
 openSnackBar(msg: string, action: string) {
   this.snackBar.open(msg, action, {

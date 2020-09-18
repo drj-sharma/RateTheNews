@@ -12,6 +12,7 @@ export class MainComponent implements OnInit {
 
   shows : any[] = [];
   images: any[] = [];
+  showid: string;
   constructor(private http: HttpClient) {}
   storage = firebase.storage();
   @ViewChild('myimg') img: ElementRef;
@@ -25,7 +26,6 @@ export class MainComponent implements OnInit {
   getshows(){
     this.http.get('http://localhost:3000/fetchshows', {responseType: 'json'}).subscribe((response: any[]) => {
       this.shows= response;
-      console.log(this.shows);
       });
 }
 }

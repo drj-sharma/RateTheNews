@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { NewsShow } from '../models/NewsShow';
 import { finalize, tap } from 'rxjs/operators';
+import { ReloadService } from '../reload.service';
 
 @Component({
   selector: 'upload-task',
@@ -21,7 +22,7 @@ export class UploadTaskComponent implements OnInit {
   snapshot: Observable<any>;
   downloadURL: string;
 
-  constructor(private storage: AngularFireStorage, private db: AngularFirestore) { }
+  constructor(private storage: AngularFireStorage, private db: AngularFirestore, private reload: ReloadService) { }
 
   ngOnInit() {
     this.startUpload();
@@ -51,6 +52,10 @@ export class UploadTaskComponent implements OnInit {
         this.db.collection('news-shows').add( {title: this.show.title, poster: this.downloadURL,anchor: this.show.anchor,description: this.show.description });
       }),
     );
+  }
+
+  reloadadmin(){
+    this.reload.sendAction(true);
   }
 
   isActive(snapshot) {
