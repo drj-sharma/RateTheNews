@@ -26,6 +26,7 @@ import { SafePipe } from './safe.pipe';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { DropzoneDirective } from './dropzone.directive';
 import { UploadTaskComponent } from './upload-task/upload-task.component';
+import { YourArticlesComponent } from './your-articles/your-articles.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { UploadTaskComponent } from './upload-task/upload-task.component';
     SafePipe,
     DropzoneDirective,
     UploadTaskComponent,
+    YourArticlesComponent,
   ],
   imports: [
     BrowserModule,

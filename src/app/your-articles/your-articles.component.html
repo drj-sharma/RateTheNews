@@ -1,0 +1,29 @@
+<div class="margin1">
+  <br />
+  <span class="head"> <strong> Your Articles </strong></span>
+  <button (click)="goToArticle()" class="write-story" mat-raised-button>
+    Write an article
+  </button>
+  <br />
+  <br />
+  <hr />
+  <br />
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Drafts">
+      <div class="titles">Not Implemented!!</div>
+    </mat-tab>
+    <mat-tab label="Published">
+      <div class="titles">
+        <div
+          class="articles"
+          *ngFor="let article of articlesID"
+          (click)="viewArticle(article)"
+        >
+          <div>
+            <p>{{ article }}</p>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

@@ -6,6 +6,7 @@ import { ArticleComponent } from './article/article/article.component';
 import { MainComponent } from './main/main.component';
 import { PublishedArticlesComponent } from './published-articles/published-articles.component';
 import { TvRatingComponent } from './tv-rating/tv-rating.component';
+import { YourArticlesComponent } from './your-articles/your-articles.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'article', component: ArticleComponent },
   { path: 'tv-rating/:id', component: TvRatingComponent },
+  { path: 'your-articles', component: YourArticlesComponent },
   { path: 'published', component: PublishedArticlesComponent }
 ];
 
