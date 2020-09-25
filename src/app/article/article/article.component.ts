@@ -8,7 +8,6 @@ import Table from '@editorjs/table';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Article } from 'src/app/models/article';
-import { User } from 'src/app/services/user.model';
 import { firestore } from 'firebase';
 @Component({
   selector: 'app-article',
@@ -44,7 +43,12 @@ export class ArticleComponent implements OnInit {
       tools: {
         header: {
           class: Header,
-          inlineToolbar: true
+          shortcut: 'CMD+SHIFT+H',
+          config: {
+            inlineToolbar: true,
+            levels: [1, 2, 3, 4],
+            defaultLevel: 1,
+          }
         },
         linkTool: {
           class: LinkTool,

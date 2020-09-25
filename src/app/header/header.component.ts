@@ -32,6 +32,6 @@ export class HeaderComponent implements OnInit {
     });
   }
   goToArticles() {
-    this.router.navigate(['published']);
+    this.router.navigate(['your-articles']);
   }
 }

@@ -23,30 +23,27 @@ export class TvRatingComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.activatedRoute.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params.id;
       });
-      this.fetchdata();
-      console.log(this.show)
+    this.fetchdata();
+    console.log(this.show);
   }
-  
   open() {
     this.isHidden = !this.isHidden;
   }
   fetchdata(){
-    this.show;
-    var parent = this;
-    var docRef = this.db.collection("news-shows").doc(this.id);
-    docRef.get().toPromise().then(function(doc) {
+    const parent = this;
+    const docRef = this.db.collection('news-shows').doc(this.id);
+    docRef.get().toPromise().then( (doc) => {
         if (doc.exists) {
           parent.show.push(doc.data());
           console.log(parent.show);
-
         } else {
             // doc.data() will be undefined in this case
-            console.log("No such document!");
+            console.log('No such document!');
         }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
+    }).catch( (error) => {
+        console.log('Error getting document:', error);
     });
   }
 }

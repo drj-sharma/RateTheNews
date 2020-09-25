@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-published-articles',
@@ -15,38 +16,25 @@ export class PublishedArticlesComponent implements OnInit {
     time: any;      // child
     uid: string;
     articleRef: any;
-    articlesID: string[];
-    constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
-        this.articleRef = this.afs.collection('articles');
-        this.afAuth.authState.subscribe(user => {
-            if (user) {
-                this.uid = user.uid;
-                this.getArticles(this.uid);
-            } else {
-                this.uid = null;
-            }
-        });
+    constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, private route: ActivatedRoute) {
+
     }
 
     ngOnInit(): void {
-    }
-    async getArticles(uid: string) {
-        const userRef: AngularFirestoreDocument = this.afs.collection('users').doc(uid);
-        await userRef.get().toPromise().then((doc) => {
-            if (doc.data().articles.length === 0) {
-                this.vis = true;
-                return;
-            }
-            this.articlesID = doc.data().articles;
-            console.log(this.articlesID);
+        this.route.params.subscribe(params => {
+            this.getArticles(params.id);
         });
-        if (this.articlesID === undefined) {
+    }
+    async getArticles(article: string) {
+        if (article === undefined) {
+            this.vis = true;
             return;
         }
-        const articleRef: AngularFirestoreDocument = this.afs.collection('articles').doc(this.articlesID[0]);
+        const articleRef: AngularFirestoreDocument = this.afs.collection('articles').doc(article);
         await articleRef.get().toPromise().then((doc) => {
             this.article = doc.data();
         });
+        this.uid = this.article.uid;
         this.data = this.article.articleJSON;
         this.time = this.article.time;
     }
