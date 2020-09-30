@@ -55,7 +55,9 @@ export class AuthService {
     .catch(() => {
       console.log('Error while signing out!');
     });
-    return this.router.navigate(['/']);
+    this.router.navigate(['/']);
+    window.location.reload();
+    return;
   }
   private updateUserData(user: any) {
     const userRef: AngularFirestoreDocument<User> = this.afs.collection('users').doc(user.uid);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import {RegisterUserComponent} from 'src/app/register-user/register-user.component'
+import { RegisterUserComponent } from 'src/app/register-user/register-user.component';
 
 @Component({
   selector: 'app-register',
@@ -10,16 +10,15 @@ import {RegisterUserComponent} from 'src/app/register-user/register-user.compone
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,public auth: AuthService) { }
+  constructor(public dialog: MatDialog, public auth: AuthService) { }
 
   ngOnInit(): void {
   }
-  openDialog(){
+  openDialog() {
     const dialogRef2 = this.dialog.open(RegisterUserComponent);
 
     dialogRef2.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
-
 }
