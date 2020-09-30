@@ -25,7 +25,25 @@
     </li>
   </ul>
   <div id="login">
-    <div *ngIf="auth.user$ | async as user; else login">
+    <div *ngIf="vis">
+      <button
+        mat-flat-button
+        color="warn"
+        class="button"
+        (click)="openLoginDialog()"
+      >
+        Login
+      </button>
+      <button
+        mat-stroked-button
+        color="warn"
+        id="register-btn"
+        (click)="openRegisterDialog()"
+      >
+        Register
+      </button>
+    </div>
+    <div *ngIf="auth.user$ | async as user;">
       <!-- <button class="button" (click)="auth.signOut()">Sign Out</button> -->
       <div class="user-dropdown">
         <div id="user-profile">
@@ -64,23 +82,5 @@
       </div>
     </div>
     <h4></h4>
-    <ng-template #login>
-      <button
-        mat-flat-button
-        color="warn"
-        class="button"
-        (click)="openLoginDialog()"
-      >
-        Login
-      </button>
-      <button
-        mat-stroked-button
-        color="warn"
-        id="register-btn"
-        (click)="openRegisterDialog()"
-      >
-        Register
-      </button>
-    </ng-template>
   </div>
 </div>

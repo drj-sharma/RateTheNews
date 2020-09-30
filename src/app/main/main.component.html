@@ -1,53 +1,65 @@
 <div class="cssSlider">
- <input name="slider" id="slide01" type="radio"  checked="checked"/>
- <input name="slider" id="slide02" type="radio" />
- <input name="slider" id="slide03" type="radio" />
- <input name="slider" id="play_slides" type="radio"/>
- <ul class="sliderElements">
-  <li>
-    <img src="../../assets/images/bannner1.webp" alt=""  />
-  </li>
-  <li>
-    <img src="../../assets/images/banner2.jpg" alt=""/>
-  </li>
-  <li>
-    <img src="../../assets/images/banner3.jpg" alt=""/>
-  </li>
- </ul>
- <ul class="sliderControls">
-  <li><label for="slide01"></label></li>
-  <li><label for="slide02"></label></li>
-  <li><label for="slide03"></label></li>
- </ul>
+  <input name="slider" id="slide01" type="radio" checked="checked" />
+  <input name="slider" id="slide02" type="radio" />
+  <input name="slider" id="slide03" type="radio" />
+  <input name="slider" id="play_slides" type="radio" />
+  <ul class="sliderElements">
+    <li>
+      <img src="../../assets/images/bannner1.webp" alt="" />
+    </li>
+    <li>
+      <img src="../../assets/images/banner2.jpg" alt="" />
+    </li>
+    <li>
+      <img src="../../assets/images/banner3.jpg" alt="" />
+    </li>
+  </ul>
+  <ul class="sliderControls">
+    <li><label for="slide01"></label></li>
+    <li><label for="slide02"></label></li>
+    <li><label for="slide03"></label></li>
+  </ul>
 </div>
-
+<section *ngIf="showSpinner" class="spinner">
+  <mat-spinner color="warn" [diameter]="70"></mat-spinner>
+</section>
 <mat-tab-group id="tabs" class="margin1">
-    <mat-tab label="Live">
-        <div id='card' *ngFor="let show of shows" [routerLink]="[ 'tv-rating',show.id]">
-            <div id="poster">
-                <img [src] ='show.poster' alt="" id='myimg' height="300px" width="200px">
-            </div>
-            <div id="title">
-                <h3>{{show.title}}</h3>
-            </div>
-            <div id="rating">
-                <img src='../../assets/images/star.png'>
-                <h4>{{show.rating}}</h4>
-            </div>
-        </div>
-    </mat-tab>
-    <mat-tab label="Upcoming">
-        <div id='card'>
-            <div id="poster">
-                <img src="../../assets/images/poster2.webp" alt="">
-            </div>
-            <div id="title">
-                <h3>POSTER 2</h3>
-            </div>
-            <div id="rating">
-                <img src='../../assets/images/star.png'>
-                <h4>7.9</h4>
-            </div>
-        </div>
-    </mat-tab>
+  <mat-tab label="Live">
+    <div
+      id="card"
+      *ngFor="let show of shows"
+      [routerLink]="['tv-rating', show.id]"
+    >
+      <div id="poster">
+        <img
+          [src]="show.poster"
+          alt=""
+          id="myimg"
+          height="300px"
+          width="200px"
+        />
+      </div>
+      <div id="title">
+        <h3>{{ show.title }}</h3>
+      </div>
+      <div id="rating">
+        <img src="../../assets/images/star.png" />
+        <h4>{{ show.rating }}</h4>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Upcoming">
+    <div id="card">
+      <div id="poster">
+        <img src="../../assets/images/poster2.webp" alt="" />
+      </div>
+      <div id="title">
+        <h3>POSTER 2</h3>
+      </div>
+      <div id="rating">
+        <img src="../../assets/images/star.png" />
+        <h4>7.9</h4>
+      </div>
+    </div>
+  </mat-tab>
 </mat-tab-group>

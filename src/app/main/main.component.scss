@@ -64,7 +64,11 @@ h4{
     -o-transition: left .8s ease-in-out;
     transition: left .8s ease-in-out;
 }
- 
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .sliderElements > li {
     float: left;
     width: 33.33%;
