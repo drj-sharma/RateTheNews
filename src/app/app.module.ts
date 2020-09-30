@@ -27,6 +27,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { DropzoneDirective } from './dropzone.directive';
 import { UploadTaskComponent } from './upload-task/upload-task.component';
 import { YourArticlesComponent } from './your-articles/your-articles.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { YourArticlesComponent } from './your-articles/your-articles.component';
     DropzoneDirective,
     UploadTaskComponent,
     YourArticlesComponent,
+    RegisterUserComponent,
   ],
   imports: [
     BrowserModule,

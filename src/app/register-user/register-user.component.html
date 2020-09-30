@@ -1,12 +1,19 @@
-<h1>Welcome Back!</h1>
+<h1>Register</h1>
+<h4 >{{errorMessage}}</h4>
 <p>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" >
         <mat-label>Email</mat-label>
         <input matInput [(ngModel)]="email">
     </mat-form-field>
 </p>
 <p>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" >
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="username">
+    </mat-form-field>
+</p>
+<p>
+    <mat-form-field appearance="outline" >
         <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -14,12 +21,6 @@
         </button>
     </mat-form-field>
 </p>
-<p id="login">
-    <button mat-flat-button color="warn"  class="button" (click)="login()" >Login</button>
+<p id="Register">
+    <button (click)="onsignup()" mat-flat-button color="warn"  class="button" >Sign Up</button>
 </p>
-<div id ="other">
-    <h4>Login with:</h4>
-    <img (click)="auth.googleSignin()" src="../../assets/images/google.png">
-    <img src="../../assets/images/facebook.png">
-    <img src="../../assets/images/twitter.png">
-</div>
