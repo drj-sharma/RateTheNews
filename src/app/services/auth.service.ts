@@ -34,7 +34,9 @@ export class AuthService {
   async googleSignin() {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+    localStorage.setItem('user', JSON.stringify(credential.user));
+    this.updateUserData(credential.user);
+    window.location.reload();
   }
   async facebookSignin() {
     const provider = new auth.FacebookAuthProvider();
@@ -47,6 +49,7 @@ export class AuthService {
     await this.afAuth.signOut()
     .then(() => {
         console.log('Signout successfully!');
+        localStorage.removeItem('user');
         this.user$ = of(null);
       })
     .catch(() => {

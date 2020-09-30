@@ -4,6 +4,8 @@ import { LoginComponent } from 'src/app/login/login.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from 'src/app/register/register.component';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from '../services/user.model';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +13,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  user: User;
   constructor(public dialog: MatDialog, public auth: AuthService, private router: Router) { }
-
+  vis = true;
   ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.vis = false;
+    }
   }
 
   openLoginDialog(): void {
