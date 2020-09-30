@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
     encapsulation: ViewEncapsulation.None
 })
 export class PublishedArticlesComponent implements OnInit {
+    showSpinner = true;
     vis = false;
     article: any;   // parent
     data: any;      // child
@@ -37,5 +38,6 @@ export class PublishedArticlesComponent implements OnInit {
         this.uid = this.article.uid;
         this.data = this.article.articleJSON;
         this.time = this.article.time;
+        this.showSpinner = false;
     }
 }

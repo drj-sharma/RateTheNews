@@ -11,10 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
   constructor(public dialog: MatDialog, public auth: AuthService, private router: Router) { }
-
+  vis = true;
   ngOnInit(): void {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.vis = false;
+    }
   }
 
   openLoginDialog(): void {

@@ -29,3 +29,12 @@
   margin-top: 10vh;
   font-size: 25px;
 }
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}

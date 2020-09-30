@@ -1,7 +1,9 @@
 <div class="no-article" *ngIf="vis">
     No Articles Published yet!!! 🤖
 </div>
-
+<section *ngIf="showSpinner" class="spinner">
+  <mat-spinner [diameter]="70"></mat-spinner>
+</section>
 <div *ngIf="!vis" class="ce-block">
   <div class="ce-block__content">
     <ng-container [ngSwitch]="b?.type" *ngFor="let b of data; let i = index">
