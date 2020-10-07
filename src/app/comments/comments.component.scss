@@ -1,0 +1,31 @@
+#container{
+    margin-right: 10vw;
+    margin-left: 10vw;
+    margin-top: 50px;
+}
+#post-comment button{
+    margin-left: 10px;
+}
+#all-comments{
+
+}
+#all-comments h4{
+    display: inline-block;
+}
+#user{
+    font-weight: bold;
+    margin-right: 10px;
+}
+#comment{
+    margin-left: 20px;
+}
+#time{
+        color: #909497
+        ;
+}
+#downvote{
+    transform: rotate(180deg);
+}
+#all-reply{
+    margin-left: 20px;
+}

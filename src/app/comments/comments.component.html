@@ -1,0 +1,39 @@
+<div id="container">
+    <h2>Comments</h2>
+    <div id='post-comment'>
+        <mat-form-field class="example-full-width">
+            <mat-label>Leave a comment</mat-label>
+            <textarea matInput [(ngModel)]="commentbox"></textarea>
+        </mat-form-field>
+        <button mat-flat-button color="warn" (click)='onClick()'>post-comment</button>
+    </div>
+    <div id="all-comments" *ngFor="let comment of comments">
+        <h4 id="user">{{comment.uid}}</h4>
+        <h4 id="time">1 hour ago</h4>
+        <p id="comment">{{comment.comment}}</p>
+        <div id="bottom">
+            <img src="../../assets/images/up-arrow.png">
+            <h4>149</h4>
+            <img src="../../assets/images/up-arrow.png" id="downvote">
+            <img src="../../assets/images/reply.png" height="28" width="28" (click)="toggle(comment)">
+        </div>
+        <div id="reply-box" *ngIf="comment.show">
+            <mat-form-field class="example-full-width">
+                <mat-label>Leave a reply</mat-label>
+                <textarea matInput [(ngModel)]="replybox"></textarea>
+            </mat-form-field>
+            <button mat-flat-button color="warn" (click)='onClickreply(comment)'>post-reply</button>
+        </div>
+        <div id="all-reply" *ngFor="let reply of comment.replies">
+            <h4 id="user">{{reply.uid}}</h4>
+            <h4 id="time">1 hour ago</h4>
+            <p id="comment">{{reply.reply}}</p>
+            <div id="bottom">
+                <img src="../../assets/images/up-arrow.png">
+                <h4>149</h4>
+                <img src="../../assets/images/up-arrow.png" id="downvote">
+                <img src="../../assets/images/reply.png" height="28" width="28">
+            </div>
+        </div>
+    </div>
+</div>

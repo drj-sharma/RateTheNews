@@ -27,6 +27,7 @@ import { DropzoneDirective } from './dropzone.directive';
 import { UploadTaskComponent } from './upload-task/upload-task.component';
 import { YourArticlesComponent } from './your-articles/your-articles.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
     UploadTaskComponent,
     YourArticlesComponent,
     RegisterUserComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,
