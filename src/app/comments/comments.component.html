@@ -8,7 +8,8 @@
         <button mat-flat-button color="warn" (click)='onClick()'>post-comment</button>
     </div>
     <div id="all-comments" *ngFor="let comment of comments">
-        <h4 id="user">{{comment.uid}}</h4>
+        <img src='{{comment.userphoto}}' style="border-radius: 50%; height: 2.2em" alt="avatar">
+        <h4 id="user">{{comment.user}}</h4>
         <h4 id="time">1 hour ago</h4>
         <p id="comment">{{comment.comment}}</p>
         <div id="bottom">
@@ -24,8 +25,10 @@
             </mat-form-field>
             <button mat-flat-button color="warn" (click)='onClickreply(comment)'>post-reply</button>
         </div>
+        <h4 id="loadreplies" *ngIf="comment.loadrepliesvar" (click)='loadreplies(comment)' >Load replies</h4>
         <div id="all-reply" *ngFor="let reply of comment.replies">
-            <h4 id="user">{{reply.uid}}</h4>
+            <img src='{{reply.userphoto}}' style="border-radius: 50%; height: 2.2em" alt="avatar">
+            <h4 id="user">{{reply.user}}</h4>
             <h4 id="time">1 hour ago</h4>
             <p id="comment">{{reply.reply}}</p>
             <div id="bottom">
@@ -35,5 +38,7 @@
                 <img src="../../assets/images/reply.png" height="28" width="28">
             </div>
         </div>
+        <h4 id="loadmorereplies" *ngIf="!comment.loadrepliesvar" (click)='morereplies(comment)' >Load More</h4>
     </div>
+    <button mat-flat-button color="warn" (click)='getmoreComments()' >Load more</button>
 </div>
