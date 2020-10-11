@@ -6,18 +6,16 @@ import { RegisterUserComponent } from 'src/app/register-user/register-user.compo
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  constructor(public dialog: MatDialog, public auth: AuthService) {}
 
-  constructor(public dialog: MatDialog, public auth: AuthService) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   openDialog() {
     const dialogRef2 = this.dialog.open(RegisterUserComponent);
 
-    dialogRef2.afterClosed().subscribe(result => {
+    dialogRef2.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
   }

@@ -28,6 +28,7 @@ import { UploadTaskComponent } from './upload-task/upload-task.component';
 import { YourArticlesComponent } from './your-articles/your-articles.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { CommentsComponent } from './comments/comments.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CommentsComponent } from './comments/comments.component';
     YourArticlesComponent,
     RegisterUserComponent,
     CommentsComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,
