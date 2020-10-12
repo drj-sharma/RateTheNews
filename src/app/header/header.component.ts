@@ -37,4 +37,7 @@ export class HeaderComponent implements OnInit {
   goToArticles() {
     this.router.navigate(['your-articles']);
   }
+  goToProfileSetting() {
+    this.router.navigate(['edit-profile']);
+  }
 }

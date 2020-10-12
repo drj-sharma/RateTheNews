@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin/admin.component';
 import { AnchorComponent } from './anchor/anchor.component';
 import { ArticleComponent } from './article/article/article.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MainComponent } from './main/main.component';
 import { PublishedArticlesComponent } from './published-articles/published-articles.component';
 import { TvRatingComponent } from './tv-rating/tv-rating.component';
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'article', component: ArticleComponent },
   { path: 'tv-rating/:id', component: TvRatingComponent },
   { path: 'your-articles', component: YourArticlesComponent },
-  { path: 'published', component: PublishedArticlesComponent }
+  { path: 'published', component: PublishedArticlesComponent },
+  { path: 'edit-profile', component: EditProfileComponent }
 ];
 
 @NgModule({

@@ -1,0 +1,39 @@
+<section class="container">
+  <span style="float: left"> <h2>Settings</h2></span>
+  <div class="user-data" *ngIf="userData">
+    <img
+      [src]="userData.photoURL"
+      alt=""
+      style="border-radius: 50%"
+      width="150px"
+    />
+    <mat-icon class="clickable" (click)="upload()">cloud_upload</mat-icon>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="userData.displayName" />
+    </mat-form-field>
+    <mat-radio-group
+      aria-label="Select an option"
+      [(ngModel)]="userData.gender"
+    >
+      <mat-radio-button value="M">Male</mat-radio-button> &nbsp;
+      <mat-radio-button value="F">Female</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="userData.email" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="userData.dob" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker
+        touchUi
+        #picker
+        startView="year"
+        [startAt]="minDate"
+      ></mat-datepicker>
+    </mat-form-field>
+    <button (click)="upload()" mat-stroked-button color="accent">Update</button>
+  </div>
+</section>
