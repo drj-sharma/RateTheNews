@@ -1,12 +1,178 @@
-<div *ngIf="show as show" id="container">
-  <h2>{{show[0].title}}</h2>
-  <div id='top'>
-    <img [src] = 'show[0].poster' height="300px" width="200px">
-    <h3>description: {{show[0].description}}</h3>
+<section *ngIf="!vis" class="spinner">
+  <mat-spinner [diameter]="70"></mat-spinner>
+</section>
+<div *ngIf="vis">
+  <div *ngIf="show as show" id="container">
+    <div class="flexy">
+      <h1>{{ show[0].title }}:</h1>
+      &nbsp;
+      <div id="rating">
+        <img src="../../assets/images/star.png" />
+        <h3>{{ show[0].rating }} avg/ <span style="color: grey">10</span></h3>
+      </div>
+      &nbsp;&nbsp;
+      <div class="vertical-divider"></div>
+      &nbsp;&nbsp;
+      <!-- star rating image -->
+      <img id="rate" src="../../assets/images/star.svg" height="30" />
+      <fieldset class="rating" *ngIf="vis">
+        <input
+          type="radio"
+          id="star10"
+          name="rating"
+          value="10"
+          [(ngModel)]="rating"
+        /><label class="full" for="star10"></label>
+        <input
+          type="radio"
+          id="star9half"
+          name="rating"
+          value="9.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star9half"></label>
+        <input
+          type="radio"
+          id="star9"
+          name="rating"
+          value="9"
+          [(ngModel)]="rating"
+        /><label class="full" for="star9"></label>
+        <input
+          type="radio"
+          id="star8half"
+          name="rating"
+          value="8.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star8half"></label>
+        <input
+          type="radio"
+          id="star8"
+          name="rating"
+          value="8"
+          [(ngModel)]="rating"
+        /><label class="full" for="star8"></label>
+        <input
+          type="radio"
+          id="star7half"
+          name="rating"
+          value="7.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star7half"></label>
+        <input
+          type="radio"
+          id="star7"
+          name="rating"
+          value="7"
+          [(ngModel)]="rating"
+        /><label class="full" for="star7"></label>
+        <input
+          type="radio"
+          id="star6half"
+          name="rating"
+          value="6.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star6half"></label>
+        <input
+          type="radio"
+          id="star6"
+          name="rating"
+          value="6"
+          [(ngModel)]="rating"
+        /><label class="full" for="star6"></label>
+        <input
+          type="radio"
+          id="star5half"
+          name="rating"
+          value="5.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star5half"></label>
+        <input
+          type="radio"
+          id="star5"
+          name="rating"
+          value="5"
+          [(ngModel)]="rating"
+        /><label class="full" for="star5"></label>
+        <input
+          type="radio"
+          id="star4half"
+          name="rating"
+          value="4.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star4half"></label>
+        <input
+          type="radio"
+          id="star4"
+          name="rating"
+          value="4"
+          [(ngModel)]="rating"
+        /><label class="full" for="star4"></label>
+        <input
+          type="radio"
+          id="star3half"
+          name="rating"
+          value="3.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star3half"></label>
+        <input
+          type="radio"
+          id="star3"
+          name="rating"
+          value="3"
+          [(ngModel)]="rating"
+        /><label class="full" for="star3"></label>
+        <input
+          type="radio"
+          id="star2half"
+          name="rating"
+          value="2.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star2half"></label>
+        <input
+          type="radio"
+          id="star2"
+          name="rating"
+          value="2"
+          [(ngModel)]="rating"
+        /><label class="full" for="star2"></label>
+        <input
+          type="radio"
+          id="star1half"
+          name="rating"
+          value="1.5"
+          [(ngModel)]="rating"
+        /><label class="half" for="star1half"></label>
+        <input
+          type="radio"
+          id="star1"
+          name="rating"
+          value="1"
+          [(ngModel)]="rating"
+        /><label class="full" for="star1"></label>
+        <input
+          type="radio"
+          id="starhalf"
+          name="rating"
+          value=".5"
+          [(ngModel)]="rating"
+        /><label class="half" for="starhalf"></label>
+      </fieldset>
+    </div>
+    <div class="tags">
+      <mat-chip-list>
+        <mat-chip> dfskl </mat-chip>
+        <mat-chip> dfskl </mat-chip>
+        <mat-chip> dfskl </mat-chip>
+      </mat-chip-list>
+    </div>
+    <br />
+    <div id="top">
+      <img [src]="show[0].poster" height="300px" width="200px" />
+      <h5>{{ show[0].description }}</h5>
+      <h5><strong>Anchor: &nbsp;</strong> Ravish Kumar</h5>
+      <h5><strong>Channel Name: &nbsp;</strong> NDTV</h5>
+      <h5><strong>Timing: &nbsp;</strong>8:00 AM (1 hr)</h5>
+    </div>
   </div>
-  <div id="rating">
-    <img src='../../assets/images/star.png'>
-    <h3>{{show[0].rating}}/10</h3>
-  </div>
+  <app-review-comp [id]="id"></app-review-comp>
 </div>
-<app-review-comp [id]="id"></app-review-comp>

@@ -12,6 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatChipsModule } from '@angular/material/chips';
 
 const material = [
   MatFormFieldModule,
@@ -26,17 +27,13 @@ const material = [
   MatProgressSpinnerModule,
   MatRadioModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatChipsModule,
 ];
-
 
 @NgModule({
   declarations: [],
-  imports: [
-    material,
-  ],
-  exports: [
-    material
-  ]
+  imports: [material],
+  exports: [material],
 })
-export class MaterialModule { }
+export class MaterialModule {}
