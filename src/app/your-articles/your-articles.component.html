@@ -12,15 +12,17 @@
     <mat-tab label="Drafts">
       <div class="titles">Not Implemented!!</div>
     </mat-tab>
+    <!-- ! fix error: if no article's been published -->
     <mat-tab label="Published">
       <div class="titles">
         <div
           class="articles"
-          *ngFor="let article of articlesID"
-          (click)="viewArticle(article)"
+          *ngFor="let article of articleMap | keyvalue"
+          (click)="viewArticle(article.key)"
         >
-          <div>
-            <p>{{ article }}</p>
+          <div class="articles-child">
+            <p class="title"> <i> {{ article.value.title }} </i></p>
+            <p class="time"> &nbsp; {{ article.value.time | date: 'short'}}</p>
           </div>
         </div>
       </div>

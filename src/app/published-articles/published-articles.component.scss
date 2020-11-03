@@ -4,16 +4,32 @@
   font-family: "Playfair Display", serif;
   font-family: "Raleway", sans-serif;
 }
-
-.colorme {
-  color: red;
+@mixin margin-left-right {
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+.article-grid {
+  display: grid;
+  grid-template-columns: 15% 85%;
 }
 .fxlay {
-  margin-left: 20vw;
-  margin-right: 15vw;
+  @include margin-left-right;
   display: flex;
   align-items: flex;
   justify-content: flex-start;
+}
+.author {
+  color: rgb(121, 115, 115);
+  @include margin-left-right;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  span {
+    padding-right: 10px;
+  }
 }
 .header {
   font-family: "EB Garamond", serif;
@@ -36,4 +52,31 @@
   margin-left: -50px;
   width: 100px;
   height: 100px;
+}
+.title {
+  @include margin-left-right;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: 500;
+}
+.action {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  button:first-child {
+    color: white;
+    background: #e25822;
+    margin-bottom: 40px;
+  }
+  button:last-child {
+    color: white;
+    background: #31d2fa;
+    margin-bottom: 40px;
+  }
 }

@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 const material = [
   MatFormFieldModule,
@@ -29,6 +30,7 @@ const material = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatChipsModule,
+  MatBottomSheetModule,
 ];
 
 @NgModule({
