@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from 'src/app/login/login.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -21,21 +22,22 @@ export class CommentsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { articleID: string }
   ) {}
 
   ngOnInit(): void {
     this.getComments();
   }
 
-  onClick() {
+  postComment() {
     const user = firebase.auth().currentUser;
 
     if (user !== null) {
       const date = new Date();
       this.db
         .collection('comments')
-        .add({ uid: user.uid, comment: this.commentbox, time: date });
+        .add({ uid: user.uid, comment: this.commentbox, time: date, articleID: this.data.articleID });
       this.commentbox = '';
     } else {
       const dialogRef2 = this.dialog.open(LoginComponent);
@@ -52,7 +54,7 @@ export class CommentsComponent implements OnInit {
     console.log(this.i);
     this.db
       .collection('comments', (ref) =>
-        ref.orderBy('time').startAfter(this.tempdate).limit(this.i)
+        ref.orderBy('time').where('articleID', '==', `${this.data.articleID}`).startAfter(this.tempdate).limit(this.i)
       )
       .get()
       .toPromise()
@@ -78,7 +80,9 @@ export class CommentsComponent implements OnInit {
   getuser() {
     const parent = this;
     Object.keys(this.comments).forEach((key) => {
-      const docRef = parent.db.collection('users').doc(parent.comments[key].uid);
+      const docRef = parent.db
+        .collection('users')
+        .doc(parent.comments[key].uid);
       docRef
         .get()
         .toPromise()
@@ -107,26 +111,24 @@ export class CommentsComponent implements OnInit {
     com.show = !com.show;
   }
 
-  addreply() {
+  addreply(): void {
     this.comment = null;
-    for (this.comment in this.comments) {
-      this.comment.show = this.show;
-    }
+    // for (this.comment in this.comments) {
+    //   this.comment.show = this.show;
+    // }
   }
 
-  onClickreply(com) {
+  postReply(com) {
     const date = new Date();
     const user = firebase.auth().currentUser;
 
     if (user != null) {
-      this.db
-        .collection('replies')
-        .add({
-          reply: this.replybox,
-          time: date,
-          uid: user.uid,
-          commentid: com.commentid,
-        });
+      this.db.collection('replies').add({
+        reply: this.replybox,
+        time: date,
+        uid: user.uid,
+        commentid: com.commentid,
+      });
     } else {
       const dialogRef2 = this.dialog.open(LoginComponent);
 
@@ -171,25 +173,25 @@ export class CommentsComponent implements OnInit {
   getuserdata() {
     const parent = this;
     this.comments.forEach((arrayItem) => {
-        arrayItem.replies.forEach((element) => {
-          const docRef = parent.db.collection('users').doc(element.uid);
+      arrayItem.replies.forEach((element) => {
+        const docRef = parent.db.collection('users').doc(element.uid);
 
-          docRef
-            .get()
-            .toPromise()
-            .then((doc) => {
-              if (doc.exists) {
-                element.user = doc.data().displayName;
-                element.userphoto = doc.data().photoURL;
-              } else {
-                console.log('No such document!');
-              }
-            })
-            .catch((error) => {
-              console.log('Error getting document:', error);
-            });
-        });
+        docRef
+          .get()
+          .toPromise()
+          .then((doc) => {
+            if (doc.exists) {
+              element.user = doc.data().displayName;
+              element.userphoto = doc.data().photoURL;
+            } else {
+              console.log('No such document!');
+            }
+          })
+          .catch((error) => {
+            console.log('Error getting document:', error);
+          });
       });
+    });
   }
   getmoreComments() {
     this.i = this.i + 10;

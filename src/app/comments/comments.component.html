@@ -5,7 +5,7 @@
       <mat-label>Leave a comment</mat-label>
       <textarea matInput [(ngModel)]="commentbox"></textarea>
     </mat-form-field>
-    <button mat-mini-fab color="warn" (click)="onClick()">
+    <button mat-mini-fab color="warn" (click)="postComment()">
       <mat-icon>arrow_right_alt</mat-icon>
     </button>
   </div>
@@ -34,7 +34,7 @@
         <mat-label>Leave a reply</mat-label>
         <textarea matInput [(ngModel)]="replybox"></textarea>
       </mat-form-field>
-      <button mat-flat-button color="warn" (click)="onClickreply(comment)">
+      <button mat-flat-button color="warn" (click)="postReply(comment)">
         post-reply
       </button>
     </div>

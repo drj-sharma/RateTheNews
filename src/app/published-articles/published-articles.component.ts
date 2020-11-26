@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {
+  MatBottomSheet,
+  MatBottomSheetRef,
+} from '@angular/material/bottom-sheet';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -26,17 +29,19 @@ export class PublishedArticlesComponent implements OnInit {
   articleRef: any;
   author: User;
   title: string;
+  articleID: string;
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private _bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.getArticles(params.id);
+      this.articleID = params.id;
     });
   }
   async getArticles(article: string) {
@@ -74,6 +79,8 @@ export class PublishedArticlesComponent implements OnInit {
       );
   }
   openComments(): void {
-    this._bottomSheet.open(CommentsComponent);
+    this.bottomSheet.open(CommentsComponent, {
+      data: { articleID: this.articleID },
+    });
   }
 }
