@@ -49,7 +49,7 @@ export class UploadTaskComponent implements OnInit {
       finalize( async() =>  {
         this.downloadURL = await ref.getDownloadURL().toPromise();
 
-        this.db.collection('news-shows').add( {title: this.show.title, poster: this.downloadURL,anchor: this.show.anchor,description: this.show.description });
+        this.db.collection('news-shows').add( {title: this.show.title, poster: this.downloadURL,anchor: this.show.anchor,description: this.show.description,avgrating: 0,numrating: 0 });
       }),
     );
   }
