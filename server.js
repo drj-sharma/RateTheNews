@@ -17,7 +17,6 @@ const storage = new Storage({
 console.log(__dirname);
 const bucketref = storage.bucket("ratethenews-20e78.appspot.com");
 var serviceAccount = require("./ratethenews-20e78-firebase-adminsdk-fe5k4-741d5391f5.json");
-const { resolve } = require("path");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
