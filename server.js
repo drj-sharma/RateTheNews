@@ -1,26 +1,23 @@
 var express = require("express");
+var cors = require("cors");
+const path = require("path");
+const { format } = require("util");
 var bodyparser = require("body-parser");
 var admin = require("firebase-admin");
+const { Storage } = require("@google-cloud/storage");
+const multer = require("multer");
 var app = express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
-
-//for cors
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
+app.use(cors());
+const storage = new Storage({
+  projectId: "ratethenews-20e78",
+  keyFilename: path.join(__dirname, "./ratethenews-20e78-aa1bc0399669.json"),
 });
-
+console.log(__dirname);
+const bucketref = storage.bucket("ratethenews-20e78.appspot.com");
 var serviceAccount = require("./ratethenews-20e78-firebase-adminsdk-fe5k4-741d5391f5.json");
+const { resolve } = require("path");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -30,9 +27,13 @@ admin.initializeApp({
 const db = admin.firestore();
 var ref = db.collection("news-shows");
 const userRef = db.collection("users");
-var storageRef = admin.storage();
 var articleRef = db.collection("articles");
-console.log(storageRef);
+var upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // no larger than 5mb, you can change as needed.
+  },
+});
 
 app.put("/submitshow", (req, res) => {
   console.log(req.body);
@@ -91,6 +92,47 @@ app.get("/fetchshows", (req, res) => {
       console.log("Error getting documents: ", error);
     });
 });
+app.post("/image-upload", upload.single("image"), (req, res) => {
+  const file = req.file;
+  if (file) {
+    uploadImageToStorage(file)
+      .then((data) => {
+        res.send({
+          success: 1,
+          file: {
+            url: data,
+          },
+        });
+      })
+      .catch((e) => console.log(e));
+  }
+});
+async function uploadImageToStorage(imageFile) {
+  console.log(imageFile);
+  return new Promise((resolve, reject) => {
+    if (!imageFile) {
+      reject("No image file");
+      return;
+    }
+    let newFileName = Date.now() + "-" + imageFile.originalname;
+    let fileUpload = bucketref.file(newFileName);
+    const blobStream = fileUpload.createWriteStream({
+      resumable: false,
+      gzip: true,
+    });
+    blobStream.on("error", (error) => {
+      console.error(error);
+    });
+    blobStream.on("finish", () => {
+      const url = format(
+        `http://storage.googleapis.com/${bucketref.name}/${fileUpload.name}`
+      );
+      resolve(url);
+      console.log("Uploaded Successfully");
+    });
+    blobStream.end(imageFile.buffer);
+  });
+}
 // get user data by UID
 app.get("/getUserByUid", (req, res) => {
   userRef
@@ -106,7 +148,7 @@ app.get("/getArticleHeadings", (req, res) => {
     .doc(req.query.article)
     .get()
     .then((val) => res.send(val.data()))
-    .catch((e) => console.log(e))
+    .catch((e) => console.log(e));
 });
 // request apis
 

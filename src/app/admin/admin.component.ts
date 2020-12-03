@@ -1,17 +1,16 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NewsShow } from '../models/NewsShow';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReloadService } from '../reload.service';
-import { Router,NavigationEnd  } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-
-  submit: boolean = false;
+  submit = false;
 
   isHovering: boolean;
   mySubscription: any;
@@ -21,11 +20,13 @@ export class AdminComponent implements OnInit {
     title: '',
     description: '',
     anchor: '',
-    poster: ''
-
+    poster: '',
   };
-  constructor(private router: Router, private snackBar: MatSnackBar, private reload: ReloadService) {
-  }
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private reload: ReloadService
+  ) {}
   openSnackBar(msg: string, action: string) {
     this.snackBar.open(msg, action, {
       duration: 2000,
@@ -49,9 +50,9 @@ export class AdminComponent implements OnInit {
   }
 
   onDrop(files: FileList) {
-      this.file = files.item(0)
+    this.file = files.item(0);
   }
-  reloadthis(){
+  reloadthis() {
     this.clearFields();
     this.submit = false;
   }
@@ -59,7 +60,5 @@ export class AdminComponent implements OnInit {
     if (this.mySubscription) {
       this.mySubscription.unsubscribe();
     }
-  
   }
-  
-  }
+}
