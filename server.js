@@ -138,7 +138,8 @@ async function uploadImageToStorage(imageFile) {
 // editorjs link previewer
 app.get("/fetchUrl", async (req, res) => {
   let url = req.query.url;
-  let resHTML = await fetch(url);
+  let resHTML = await fetch(new URL(url))
+                      .catch((e) => console.log(e));
   const html = await resHTML.text();
   const $ = cheerio.load(html);
   // custom meta-tag function
