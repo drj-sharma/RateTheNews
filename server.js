@@ -19,7 +19,6 @@ const storage = new Storage({
 });
 const bucketref = storage.bucket("ratethenews-20e78.appspot.com");
 var serviceAccount = require("./ratethenews-20e78-firebase-adminsdk-fe5k4-741d5391f5.json");
-const { $ } = require("protractor");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
