@@ -6,7 +6,10 @@ var bodyparser = require("body-parser");
 var admin = require("firebase-admin");
 const { Storage } = require("@google-cloud/storage");
 const multer = require("multer");
+const fetch = require("node-fetch");
+const cheerio = require("cheerio");
 var app = express();
+"use strict";
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors());
@@ -14,9 +17,9 @@ const storage = new Storage({
   projectId: "ratethenews-20e78",
   keyFilename: path.join(__dirname, "./ratethenews-20e78-aa1bc0399669.json"),
 });
-console.log(__dirname);
 const bucketref = storage.bucket("ratethenews-20e78.appspot.com");
 var serviceAccount = require("./ratethenews-20e78-firebase-adminsdk-fe5k4-741d5391f5.json");
+const { $ } = require("protractor");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -91,6 +94,7 @@ app.get("/fetchshows", (req, res) => {
       console.log("Error getting documents: ", error);
     });
 });
+// editorjs image uploader
 app.post("/image-upload", upload.single("image"), (req, res) => {
   const file = req.file;
   if (file) {
@@ -132,6 +136,31 @@ async function uploadImageToStorage(imageFile) {
     blobStream.end(imageFile.buffer);
   });
 }
+// editorjs link previewer
+app.get("/fetchUrl", async (req, res) => {
+  let url = req.query.url;
+  let resHTML = await fetch(url);
+  const html = await resHTML.text();
+  const $ = cheerio.load(html);
+  // custom meta-tag function
+  const getMetaTag = (value) => {
+    return $(`meta[name=${value}]`).attr("content") ||
+           $(`meta[property="og:${value}"]`).attr("content") ||
+           $(`meta[property="twitter:${value}"]`).attr("content")
+  }
+  const resi = {
+    success: 1,
+    meta: {
+      title: $("title").first().text(),
+      description: getMetaTag("description"),
+      image: {
+        url: getMetaTag("image")
+      }
+    },
+  };
+  res.send(resi);
+  return;
+});
 // get user data by UID
 app.get("/getUserByUid", (req, res) => {
   userRef
