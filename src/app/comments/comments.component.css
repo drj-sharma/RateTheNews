@@ -1,0 +1,46 @@
+#container {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 10px;
+}
+
+#post-comment button {
+  margin-left: 10px;
+}
+
+#all-comments h4 {
+  display: inline-block;
+}
+
+#user {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+#comment {
+  margin-left: 20px;
+}
+
+#time {
+  color: #909497;
+}
+
+#downvote {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+#all-reply {
+  margin-left: 20px;
+}
+
+#loadreplies:hover {
+  color: #2f00ff;
+  cursor: pointer;
+}
+
+#loadmorereplies:hover {
+  color: #2f00ff;
+  cursor: pointer;
+}
+/*# sourceMappingURL=comments.component.css.map */

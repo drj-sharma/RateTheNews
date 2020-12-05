@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import LinkTool from '@editorjs/link';
 import List from '@editorjs/list';
 import Embed from '@editorjs/embed';
 import Table from '@editorjs/table';
+import ImageTool from '@editorjs/image';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -19,6 +20,16 @@ import { firestore } from 'firebase';
   styleUrls: ['./article.component.scss'],
 })
 export class ArticleComponent implements OnInit {
+  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
+    this.articlesCollections = this.afs.collection('articles');
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.uid = user.uid;
+      } else {
+        this.uid = null;
+      }
+    });
+  }
   articlesCollections: AngularFirestoreCollection<Article>;
   // creating object of editorjs
   public editor: any;
@@ -31,17 +42,6 @@ export class ArticleComponent implements OnInit {
     time: '',
     articleJSON: [],
   };
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth) {
-    this.articlesCollections = this.afs.collection('articles');
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.uid = user.uid;
-      } else {
-        this.uid = null;
-      }
-    });
-  }
-
   ngOnInit(): void {
     this.editor = new EditorJS({
       placeholder: 'Let\'s write an article',
@@ -62,6 +62,19 @@ export class ArticleComponent implements OnInit {
             endpoint: 'http://localhost:8008/fetchUrl',
           },
         },
+        image: {
+          class: ImageTool,
+          config: {
+            endpoints: {
+              byFile: 'http://localhost:3000/image-upload', // Your backend file uploader endpoint
+            },
+            field: 'image',
+            types: 'image/*',
+            additionalRequestData: {
+              data: 1,
+            },
+          },
+        },
         list: {
           class: List,
           inlineToolbar: true,
@@ -72,6 +85,7 @@ export class ArticleComponent implements OnInit {
           config: {
             services: {
               youtube: true,
+              twitter: true,
             },
           },
         },
@@ -86,6 +100,9 @@ export class ArticleComponent implements OnInit {
     });
   }
   publish() {
+    if (this.validateTitle()) {
+      return;
+    }
     this.editor.save().then((output: any) => {
       this.outputArray.title = this.title;
       this.outputArray.uid = this.uid;
@@ -108,5 +125,11 @@ export class ArticleComponent implements OnInit {
     userRef.update({
       articles: firestore.FieldValue.arrayUnion(this.articleID),
     });
+  }
+  validateTitle() {
+    if (this.title === undefined || this.title.length === 0) {
+      alert('Title can\'t be empty');
+      return true;
+    }
   }
 }
