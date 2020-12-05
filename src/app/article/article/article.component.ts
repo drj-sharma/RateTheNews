@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import LinkTool from '@editorjs/link';
@@ -59,7 +59,7 @@ export class ArticleComponent implements OnInit {
         linkTool: {
           class: LinkTool,
           config: {
-            endpoint: 'http://localhost:8008/fetchUrl',
+            endpoint: 'http://localhost:3000/fetchUrl',
           },
         },
         image: {
@@ -70,9 +70,6 @@ export class ArticleComponent implements OnInit {
             },
             field: 'image',
             types: 'image/*',
-            additionalRequestData: {
-              data: 1,
-            },
           },
         },
         list: {
