@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import * as firebase from "firebase/app";
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-loginsignup',
@@ -13,13 +15,14 @@ export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService, private dialog: MatDialog, private db: AngularFirestore,
+    private angularfirebaseAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
   }
   login(){
-    firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(function(){
-      
+    this.angularfirebaseAuth.signInWithEmailAndPassword(this.email, this.password).then(loggedInUser => {
+      this.userDetails(loggedInUser.user);
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -29,4 +32,18 @@ export class LoginComponent implements OnInit {
   });
   }
 
+  async userDetails(user) {
+    const userDoc: AngularFirestoreDocument = this.db
+      .collection('users')
+      .doc(user.uid);
+    await userDoc
+      .get()
+      .toPromise()
+      .then(doc => {
+        const user = doc.data();
+        console.log('logged in user', user);
+        sessionStorage.setItem("role", user.role);
+        this.dialog.closeAll();
+      });
+  }
 }

@@ -1,4 +1,4 @@
-<div class="admin-section">
+<div class="admin-section" *ngIf="isAuthorized">
   <div class="add-shows">
     <h1>Add News Show</h1>
     <hr />
@@ -40,3 +40,4 @@
       <button mat-raised-button (click)="submitShow(show)">Submit</button>
   </div>
 </div>
+<div class="admin-section" *ngIf="!isAuthorized">You are not Authorized</div>

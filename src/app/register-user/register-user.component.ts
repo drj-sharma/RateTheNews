@@ -56,7 +56,7 @@ export class RegisterUserComponent implements OnInit {
   userLogin() {
     this.angularfirebaseAuth.signInWithEmailAndPassword(this.email, this.password)
     .then(loggedInUser=> {
-      console.log('Logged In', loggedInUser);
+      sessionStorage.setItem("role", 'registered_user');
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;

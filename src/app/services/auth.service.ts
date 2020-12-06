@@ -49,6 +49,7 @@ export class AuthService {
     .then(() => {
         console.log('Signout successfully!');
         localStorage.removeItem('user');
+        sessionStorage.removeItem('role');
         this.user$ = of(null);
       })
     .catch(() => {
@@ -65,9 +66,11 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
+      role: 'registered_user',
       articles: []
     };
     localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem("role", 'registered_user');
     return userRef.set(data, { merge: true });
   }
 }

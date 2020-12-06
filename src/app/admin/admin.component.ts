@@ -15,6 +15,7 @@ export class AdminComponent implements OnInit {
   isHovering: boolean;
   mySubscription: any;
   file: File;
+  isAuthorized: boolean;
 
   show: NewsShow = {
     title: '',
@@ -33,6 +34,8 @@ export class AdminComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    const userRole = sessionStorage.getItem("role");
+    this.isAuthorized = userRole && userRole != null && userRole === 'admin_user';
     this.reload.action.subscribe(async (op) => {
       await this.reloadthis();
     });
