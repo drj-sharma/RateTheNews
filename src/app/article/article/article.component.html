@@ -1,6 +1,14 @@
 <button mat-fab color="primary" (click)="publish()">Publish</button>
 <div class="article-editor">
   <div id="editorjs-css">
+    <input
+      class="heading"
+      type="text"
+      placeholder="Title..."
+      name="title"
+      [(ngModel)]="title"
+      autofocus
+    />
     <div id="editorjs"></div>
   </div>
   <br />

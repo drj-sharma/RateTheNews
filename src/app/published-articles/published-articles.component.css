@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond&family=Playfair+Display:wght@500&family=Raleway:ital@1&display=swap");
+.ce-block {
+  font-family: "EB Garamond", serif;
+  font-family: "Playfair Display", serif;
+  font-family: "Raleway", sans-serif;
+}
+
+.article-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 15% 85%;
+      grid-template-columns: 15% 85%;
+}
+
+.fxlay {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: flex;
+      -ms-flex-align: flex;
+          align-items: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.author {
+  color: #797373;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.author span {
+  padding-right: 10px;
+}
+
+.header {
+  font-family: "EB Garamond", serif;
+  font-family: "Playfair Display", serif;
+  font-family: "Raleway", sans-serif;
+  font-size: 30px;
+}
+
+.no-article {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 10vh;
+  font-size: 25px;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
+
+.title {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.action button:first-child {
+  color: white;
+  background: #e25822;
+  margin-bottom: 40px;
+}
+
+.action button:last-child {
+  color: white;
+  background: #31d2fa;
+  margin-bottom: 40px;
+}
+/*# sourceMappingURL=published-articles.component.css.map */

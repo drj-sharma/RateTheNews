@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ratethenews-20e78",
+  "private_key_id": "aa1bc039966901a2dd48f3c348aca6de260b0dc4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDMjvyIEl35capU\n9BDmTNxlEASGetOfCpHyVeFZRdz5OGRNY8RKnYTMwesQNFr4zLmFmNpkrTKXUr4v\njH2AeWYIsFcUo1/UYXrrU+ekI5w3X1JCO8xOjaqatK5cEIzPNcmg2M4K5hG/8rtP\nTnkUu3zJ2bjTCbhfCLQihpD2AgpZulDAV9grkAfQcD0f6kph7qV3z61g6hTB3S0d\nCqAaGQ+h8qF90kzTQmqkxnTTCuO7MOzKTxiM9iN3zTplgmtYCLsoRmyE+s/4HCcx\nEn3v33PkF7Kgo00P+/KYgUg6ebUZ67unjyYsvsn/IkuBT7JhmQx6kaAGFX8IDQ6U\nC6tZlaQpAgMBAAECggEAC1pTMyUb0JSJoMnj5zg0UiqTqbgG5zCBvZqdFWSOeUlz\nLaVgF0kLPgb0KhPRybWpBTxgwI4pPONDeWWZcIgsTMamqpdPofygAxAGzuIIET2p\n1dG2StTLd2cYNzVW70gbruDhfJLcwNOyqBnhl/A44oYCHzpOoH2d672erXybAPRA\nCTuudTZbSnwlKhT8qxmVyNS1lghXJWi7cjrlaipyQSoyoxgw1BkuuWmadKjpQb6a\nPcZ9SJ7R/9cxfHFYwlddCwCyohlO399BF8A3SBk7ntQqQ94S5GTlG1jwMF3DYN4F\nRgslyrEKKMTtkDP2kQWpn1INs0JKTnvZMKRQvUDJ5QKBgQDwN6qihjpKMLSUFn4y\nW3lLaXYXRHmoCUtDzdqQm+C4/MBxxAfM/OdCCvxQNfu7OTBaH1cy0uRpr4ZTJxLf\nMPq4zq8HSGvCxzstXaqOVvwhhBPWzN9EeHESaao3L8T9mdcsUq1qkvrdIemy0BE/\n5jcnzvohlUG91BBUK0hX9sXDJQKBgQDZ/441xsejNNN08ADdlXDffYCjGOhYL9Md\nGJ3vf+tGXIdzm2XSdssCaU7XcBOLoY+uCat5nG5FThQrYeuixHUTTdaN8yLSep0G\nEnKCN720TvZbLsO3VlSFwld+v0tIntzBBHCRnGqjNFBPRhoO0iX4POcB6VdCq64Q\nJ2B/vW2PtQKBgQDKkvcX1cAkPoyZ8Zn8l31jZg1LM9iwJx5MkLWHi5xoA+W6SskV\nShUvcZozfkLKMUEgTxu25Xfv1DCfwOy+QUy+OrYJmz4c5Ox3pmylWp+HGB2u39hM\nopEgKPF9VpB2GJ0HaLWLkWVyxB2TSLmzPE45COeRGJB3J/WZNWLto1JE7QKBgQDX\n5IdqKpq7vy1LugShbcaDDz++RoSUEYj6X87Jyd2vqSNcEqIcdRlIIhK6uXwh5Lbu\nnRT9Mzbh3BmNfURnxjhMDeJWYlwyJswrn0lYPOvbDfhdBUs+3niGn5kXJUvhd7MY\nVNVG36mcR8rhN4PG+cgwt9/vvK92j5+qz9R5rZg7oQKBgQCbUOuqr+E3NNZaBfoK\nvel/4MYh4nISyvbBWzcUoh9S9um1UvkIkO0HKfEIzvCGZD5O6IVkW/UIXmcx0Ocj\nT+RotpFPnxltbZSDpNHYqdhGvGGnCSyxN8/WEtbZ4pvBe6V3wNcPXDHr7rSGSrzs\nR1F7ho0BthbWrBpjjKSLHK2Udg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "image-upload@ratethenews-20e78.iam.gserviceaccount.com",
+  "client_id": "106023832303275632981",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/image-upload%40ratethenews-20e78.iam.gserviceaccount.com"
+}

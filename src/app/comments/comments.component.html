@@ -1,0 +1,75 @@
+<div id="container">
+  <h2>Comments</h2>
+  <div id="post-comment">
+    <mat-form-field>
+      <mat-label>Leave a comment</mat-label>
+      <textarea matInput [(ngModel)]="commentbox"></textarea>
+    </mat-form-field>
+    <button mat-mini-fab color="warn" (click)="postComment()">
+      <mat-icon>arrow_right_alt</mat-icon>
+    </button>
+  </div>
+  <div id="all-comments" *ngFor="let comment of comments">
+    <img
+      src="{{ comment.userphoto }}"
+      style="border-radius: 50%; height: 2.2em"
+      alt="avatar"
+    />
+    <h4 id="user">{{ comment.user }}</h4>
+    <h4 id="time">1 hour ago</h4>
+    <p id="comment">{{ comment.comment }}</p>
+    <div id="bottom">
+      <img src="../../assets/images/up-arrow.png" />
+      <h4>149</h4>
+      <img src="../../assets/images/up-arrow.png" id="downvote" />
+      <img
+        src="../../assets/images/reply.png"
+        height="28"
+        width="28"
+        (click)="toggle(comment)"
+      />
+    </div>
+    <div id="reply-box" *ngIf="comment.show">
+      <mat-form-field>
+        <mat-label>Leave a reply</mat-label>
+        <textarea matInput [(ngModel)]="replybox"></textarea>
+      </mat-form-field>
+      <button mat-flat-button color="warn" (click)="postReply(comment)">
+        post-reply
+      </button>
+    </div>
+    <h4
+      id="loadreplies"
+      *ngIf="comment.loadrepliesvar"
+      (click)="loadreplies(comment)"
+    >
+      Load replies
+    </h4>
+    <div id="all-reply" *ngFor="let reply of comment.replies">
+      <img
+        src="{{ reply.userphoto }}"
+        style="border-radius: 50%; height: 2.2em"
+        alt="avatar"
+      />
+      <h4 id="user">{{ reply.user }}</h4>
+      <h4 id="time">1 hour ago</h4>
+      <p id="comment">{{ reply.reply }}</p>
+      <div id="bottom">
+        <img src="../../assets/images/up-arrow.png" />
+        <h4>149</h4>
+        <img src="../../assets/images/up-arrow.png" id="downvote" />
+        <img src="../../assets/images/reply.png" height="28" width="28" />
+      </div>
+    </div>
+    <h4
+      id="loadmorereplies"
+      *ngIf="!comment.loadrepliesvar"
+      (click)="morereplies(comment)"
+    >
+      Load More
+    </h4>
+  </div>
+  <button mat-flat-button color="warn" (click)="getmoreComments()">
+    Load more
+  </button>
+</div>

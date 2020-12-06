@@ -1,0 +1,35 @@
+#container {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 10px;
+}
+#post-comment button {
+  margin-left: 10px;
+}
+#all-comments h4 {
+  display: inline-block;
+}
+#user {
+  font-weight: bold;
+  margin-right: 10px;
+}
+#comment {
+  margin-left: 20px;
+}
+#time {
+  color: #909497;
+}
+#downvote {
+  transform: rotate(180deg);
+}
+#all-reply {
+  margin-left: 20px;
+}
+#loadreplies:hover {
+  color: rgb(47, 0, 255);
+  cursor: pointer;
+}
+#loadmorereplies:hover {
+  color: rgb(47, 0, 255);
+  cursor: pointer;
+}

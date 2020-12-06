@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,EAAE,CAAA;EACE,KAAK,EAAE,GAAG;CACb",
+    "sources": [
+        "register-user.component.scss"
+    ],
+    "names": [],
+    "file": "register-user.component.css"
+}

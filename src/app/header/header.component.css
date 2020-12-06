@@ -1,0 +1,93 @@
+#title {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#search-box {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+app-auth {
+  display: inline-block;
+}
+
+#login {
+  display: inline-block;
+  position: absolute;
+  top: 45%;
+  right: 0%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+#header {
+  position: relative;
+  margin-top: 10px;
+  width: 80%;
+  margin-right: 10%;
+  margin-left: 10%;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  height: 100px;
+}
+
+mat-form-field {
+  width: 300px;
+}
+
+h4 {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+#register-btn {
+  margin-left: 20px;
+}
+
+ul.menu li {
+  display: inline;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: #aa3838;
+}
+
+.menu {
+  position: absolute;
+  top: 40%;
+  right: 25%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  list-style-type: none;
+  display: inline-block;
+}
+
+.user-dropdown #displayName {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.user-dropdown {
+  top: 50%;
+}
+
+img {
+  -webkit-transform: translateY(30%);
+          transform: translateY(30%);
+}
+/*# sourceMappingURL=header.component.css.map */

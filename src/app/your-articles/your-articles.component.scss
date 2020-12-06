@@ -1,20 +1,33 @@
 .margin1 {
-    margin-left: 10vw;
-    margin-right: 10vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
 }
 .head {
-    margin-top: 3%;
-    font-size: 30px;
+  margin-top: 3%;
+  font-size: 30px;
 }
 .titles {
-    margin: 16px;
+  margin: 16px;
   padding: 16px;
 }
 .articles {
-    cursor: pointer;
+  cursor: pointer;
+  .articles-child {
+      display: flex;
+      justify-content: space-between;
+  }
 }
 .write-story {
-    float: right;
-    color: blueviolet;
-    border: 1px solid blueviolet;
+  float: right;
+  color: blueviolet;
+  border: 1px solid blueviolet;
+}
+.title {
+    color: rgb(36, 33, 33);
+    font-size: 24px;
+    font-weight: 500;
+}
+.time {
+    font-size: 12px;
+    color: rgb(112, 109, 109);
 }
