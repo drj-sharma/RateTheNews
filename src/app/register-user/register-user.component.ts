@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as firebase from "firebase/app";
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register-user',
@@ -14,39 +15,57 @@ export class RegisterUserComponent implements OnInit {
   hide = true;
   errorMessage: string ='';
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private angularfirebaseAuth: AngularFireAuth,
+  private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
- 
+
   onsignup(){
-    var parent= this
-    firebase.auth().signOut().then(function() {
+    //const parent= this
+    /*firebase.auth().signOut().then(function() {
       // Sign-out successful.
       console.log('User Logged Out!');
     }).catch(function(error) {
       // An error happened.
       console.log(error);
-    });
-    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(function(){
-      parent.updateUser(); 
-    }).catch(function(error) {
+    });*/
+    this.angularfirebaseAuth.createUserWithEmailAndPassword(this.email, this.password).then(fireBaseUser => {
+      this.updateUserProfile(fireBaseUser.user);
+    }).then(userProfile =>{
+      this.userLogin();
+      this.dialog.closeAll();
+    }).catch(error => {
       var errorCode = error.code;
-      parent.errorMessage = error.message;
-      
+      this.errorMessage = error.message;
+
     });
   }
-  updateUser() {
-    var parent =this;
-    firebase.auth().signInWithEmailAndPassword(this.email, this.password).catch(function(error) {
+
+  updateUserProfile(user) {
+    return this.db.collection("users").doc(user.uid).set({
+      displayName: this.username,
+      email: user.email,
+      role: 'registered_user',
+      photoURL: user.photoURL,
+      uid: user.uid
+    });
+  }
+
+  userLogin() {
+    this.angularfirebaseAuth.signInWithEmailAndPassword(this.email, this.password)
+    .then(loggedInUser=> {
+      console.log('Logged In', loggedInUser);
+    }).catch(function(error) {
       // Handle Errors here.
-      var errorCode = error.code; 
+      var errorCode = error.code;
       var errorMessage = error.message;
       console.log(errorCode);
       console.log(errorMessage);
   });
-    var user = firebase.auth().currentUser;user.updateProfile({
+    /*var user = firebase.auth().currentUser;
+    user.updateProfile({
       displayName: this.username
     }).then(function() {
       // Update successful.
@@ -66,10 +85,7 @@ export class RegisterUserComponent implements OnInit {
       });
     }).catch(function(error) {
       // An error happened.
-    });
-    
-      
-    
+    });*/
   }
 
 }

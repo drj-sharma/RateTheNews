@@ -57,7 +57,7 @@ export class AuthService {
     });
     this.router.navigate(['/']);
     window.location.reload();
-    return;
+    //return;
   }
   private updateUserData(user: any) {
     const userRef: AngularFirestoreDocument<User> = this.afs.collection('users').doc(user.uid);
