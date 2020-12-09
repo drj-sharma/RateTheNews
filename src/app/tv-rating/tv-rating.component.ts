@@ -57,6 +57,5 @@ export class TvRatingComponent implements OnInit {
   }
   toggle() {
     this.vis = true;
-    console.log('dskl');
   }
 }
