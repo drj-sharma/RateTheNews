@@ -1,7 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as firebase from 'firebase/app';
-import 'firebase/storage';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +14,6 @@ export class MainComponent implements OnInit {
   articles: any[] = [];
   showid: string;
   constructor(private http: HttpClient, private router: Router) {}
-  storage = firebase.storage();
   @ViewChild('myimg') img: ElementRef;
 
   ngOnInit(): void {
@@ -24,19 +21,22 @@ export class MainComponent implements OnInit {
     this.getArticles();
   }
 
-  getshows() {
+  async getshows() {
     this.http
       .get('http://localhost:3000/fetchshows', { responseType: 'json' })
       .subscribe((response: any[]) => {
+        console.log(response);
         this.shows = response;
         this.showSpinner = false;
       });
   }
-  getArticles() {
-    this.http.get('http://localhost:3000/fetchArticles', { responseType: 'json',})
+  async getArticles() {
+    this.http.get('http://localhost:3000/fetchArticles', { responseType: 'json', })
     .subscribe((res: any[]) => {
+      console.log(res);
       this.articles = res;
-    })
+      this.showSpinner = false;
+    });
   }
   viewArticle(articleId: string) {
     this.router.navigate(['published', { id: articleId }]);

@@ -72,7 +72,7 @@ app.put("/fetchreviews", (req, res) => {
 });
 // fetch show
 app.get("/fetchshows", (req, res) => {
-  data = [];
+  let data = [];
   db.collection("news-shows")
     .get()
     .then(function (querySnapshot) {
@@ -97,7 +97,7 @@ app.get("/fetchshows", (req, res) => {
  * @return (articles: JSON)
  */
 app.get("/fetchArticles", (req, res) => {
-  data = [];
+  let data = [];
   db.collection("articles")
     .get()
     .then((snapshot) => {
