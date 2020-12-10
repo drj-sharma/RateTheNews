@@ -55,9 +55,9 @@
       <h4 id="time">1 hour ago</h4>
       <p id="comment">{{ reply.reply }}</p>
       <div id="bottom">
-        <img src="../../assets/images/up-arrow.png" />
-        <h4>149</h4>
-        <img src="../../assets/images/up-arrow.png" id="downvote" />
+        <img src="../../assets/images/up-arrow.png" id="upvote" (click)="upvote(comment.voteid)"/>
+        <h4 id="count">149</h4>
+        <img src="../../assets/images/up-arrow.png" id="downvote" (click)="downvote(comment.voteid)"/>
         <img src="../../assets/images/reply.png" height="28" width="28" />
       </div>
     </div>

@@ -5,6 +5,9 @@ import { LoginComponent } from 'src/app/login/login.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { map } from 'rxjs/operators';
+
+
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -16,6 +19,8 @@ export class CommentsComponent implements OnInit {
   comments: any[] = [];
   comment: any;
   i = 10;
+  subscription;
+  uservote=0;
   tempdate = new Date('July 21, 1993 01:15:00');
 
   public show = false;
@@ -32,13 +37,19 @@ export class CommentsComponent implements OnInit {
 
   postComment() {
     const user = firebase.auth().currentUser;
+    var parent = this;
 
     if (user !== null) {
       const date = new Date();
       this.db
         .collection('comments')
-        .add({ uid: user.uid, comment: this.commentbox, time: date, articleID: this.data.articleID });
-      this.commentbox = '';
+        .add({ uid: user.uid, comment: this.commentbox, time: date, articleID: this.data.articleID }).then(function(docRef) {
+          console.log('jsnniiiu')
+          parent.db.collection('votes').add({allvotes: []}).then(function(docRef2) {
+            parent.db.collection('comments').doc(docRef.id).update({voteid: docRef2.id})
+          });
+      });
+     
     } else {
       const dialogRef2 = this.dialog.open(LoginComponent);
 
@@ -68,13 +79,21 @@ export class CommentsComponent implements OnInit {
             'July 21, 1993 01:15:00'
           );
           parent.tempdate = parent.comments[parent.comments.length - 1].time;
+          parent.db.collection('votes',(ref) => ref.where('upvotes','array-contains',doc.data().uid)).doc(parent.comment[parent.comment.length -1].voteid).snapshotChanges().pipe(
+            map(actions => {
+              const data = actions.payload.data();
+              const id = actions.payload.id;
+              console.log(data,id);
+            }));
         });
         this.getuser();
         this.addreply();
+        
       })
       .catch((error) => {
         console.log('Error getting document:', error);
       });
+
   }
 
   getuser() {
@@ -204,4 +223,14 @@ export class CommentsComponent implements OnInit {
   morereplies(com) {
     this.getreplies(com);
   }
+
+  upvote(voteid){
+    var vote = this.uservote == 1 ? 0 : 1;
+    this.db.collection('votes').doc(voteid).update({})
+  }
+  downvote(voteid){
+
+  }
+
+
 }
