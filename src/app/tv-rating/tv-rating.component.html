@@ -160,16 +160,16 @@
     </div>
     <div class="tags">
       <mat-chip-list>
-        <mat-chip> dfskl </mat-chip>
-        <mat-chip> dfskl </mat-chip>
-        <mat-chip> dfskl </mat-chip>
+        <mat-chip> news </mat-chip>
+        <mat-chip> anchors </mat-chip>
+        <mat-chip> facts </mat-chip>
       </mat-chip-list>
     </div>
     <br />
     <div id="top">
       <img [src]="show[0].poster" height="300px" width="200px" />
       <h5>{{ show[0].description }}</h5>
-      <h5><strong>Anchor: &nbsp;</strong> Ravish Kumar</h5>
+      <h5><strong>Anchor: &nbsp;</strong> {{ show[0].anchor }}</h5>
       <h5><strong>Channel Name: &nbsp;</strong> NDTV</h5>
       <h5><strong>Timing: &nbsp;</strong>8:00 AM (1 hr)</h5>
     </div>
