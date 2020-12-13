@@ -26,7 +26,6 @@ export class UploadTaskComponent implements OnInit {
 
   ngOnInit() {
     this.startUpload();
-    
   }
 
   startUpload() {
@@ -46,10 +45,10 @@ export class UploadTaskComponent implements OnInit {
     this.snapshot   = this.task.snapshotChanges().pipe(
       tap(console.log),
       // The file's download URL
-      finalize( async() =>  {
+      finalize(async () =>  {
         this.downloadURL = await ref.getDownloadURL().toPromise();
-
-        this.db.collection('news-shows').add( {title: this.show.title, poster: this.downloadURL,anchor: this.show.anchor,description: this.show.description,avgrating: 0,numrating: 0 });
+        this.db.collection('news-shows').add( {title: this.show.title, poster: this.downloadURL,
+          anchor: this.show.anchor, description: this.show.description });
       }),
     );
   }
@@ -57,9 +56,7 @@ export class UploadTaskComponent implements OnInit {
   reloadadmin(){
     this.reload.sendAction(true);
   }
-
   isActive(snapshot) {
     return snapshot.state === 'running' && snapshot.bytesTransferred < snapshot.totalBytes;
   }
-
 }

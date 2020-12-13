@@ -72,26 +72,19 @@
               }}"
             ></div>
 
-            <!-- Image / Video
+             <!-- Image / Video -->
                     <div *ngSwitchCase="'image'">
                         <div class="cdx-block image-tool image-tool--filled" *ngIf="b?.data?.file?.url">
                             <div class="image-tool__image">
-                                <ng-container *ngIf="isImage(b?.data?.file?.url); else elseTemplate">
-                                    <img (click)="zoomInOut($event)" class="image-tool__image-picture"
+                                <ng-container *ngIf="b?.data?.file?.url;">
+                                    <img class="image-tool__image-picture"
                                         [src]="b?.data?.file?.url">
                                     <div style="text-align: center; margin-top: 5px;" [innerHTML]="b?.data?.caption">
                                     </div>
                                 </ng-container>
-
-                                <ng-template #elseTemplate>
-                                    <video class="image-tool__image-picture" autoplay loop controls
-                                        [src]="b?.data?.file?.url'"></video>
-                                    <div style="text-align: center; margin-top: 5px;" [innerHTML]="b?.data?.caption">
-                                    </div>
-                                </ng-template>
                             </div>
                         </div>
-                    </div> -->
+                    </div> 
 
             <!-- Embed -->
             <div *ngSwitchCase="'embed'">

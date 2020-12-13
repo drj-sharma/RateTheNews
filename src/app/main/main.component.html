@@ -62,4 +62,14 @@
       </div>
     </div>
   </mat-tab>
+  <mat-tab label="Articles">
+    <div class="articles" *ngFor="let article of articles">
+      <div class="articleTile" (click)="viewArticle(article.docId)">
+        <p class="title">
+          <i> {{ article.title }} </i>
+        </p>
+        <p class="time">&nbsp; {{ article.time | date: "short" }}</p>
+      </div>
+    </div>
+  </mat-tab>
 </mat-tab-group>
