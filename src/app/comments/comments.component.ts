@@ -5,6 +5,9 @@ import { LoginComponent } from 'src/app/login/login.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { map } from 'rxjs/operators';
+
+
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -16,7 +19,17 @@ export class CommentsComponent implements OnInit {
   comments: any[] = [];
   comment: any;
   i = 10;
+  subscription;
+  uservote=0;
   tempdate = new Date('July 21, 1993 01:15:00');
+  curruser: string;
+  upvoteimg = '../../assets/images/up-arrow.png';
+  increment = firebase.firestore.FieldValue.increment(1);
+  decrement = firebase.firestore.FieldValue.increment(-1);
+  increment2 = firebase.firestore.FieldValue.increment(2);
+  decrement2= firebase.firestore.FieldValue.increment(-2);
+  wait = false;
+  waitr = false;
 
   public show = false;
   constructor(
@@ -27,7 +40,12 @@ export class CommentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.fetchcurruserid();
     this.getComments();
+
+  }
+  fetchcurruserid(){
+    this.curruser = firebase.auth().currentUser.uid;
   }
 
   postComment() {
@@ -37,8 +55,15 @@ export class CommentsComponent implements OnInit {
       const date = new Date();
       this.db
         .collection('comments')
-        .add({ uid: user.uid, comment: this.commentbox, time: date, articleID: this.data.articleID });
-      this.commentbox = '';
+        .add({ uid: user.uid, comment: this.commentbox, time: date, articleID: this.data.articleID,votes: 0 })
+        // .then(function(docRef) {
+        //   parent.db.collection('votes').add({commentid: docRef.id,upvotes: [],downvotes: []})
+        //   .then(function(docRef2) {
+        //       parent.db.collection('comments').doc(docRef.id).update({voteid: docRef2.id})
+      //     })
+      // })
+      
+     
     } else {
       const dialogRef2 = this.dialog.open(LoginComponent);
 
@@ -51,7 +76,6 @@ export class CommentsComponent implements OnInit {
 
   getComments() {
     const parent = this;
-    console.log(this.i);
     this.db
       .collection('comments', (ref) =>
         ref.orderBy('time').where('articleID', '==', `${this.data.articleID}`).startAfter(this.tempdate).limit(this.i)
@@ -60,21 +84,38 @@ export class CommentsComponent implements OnInit {
       .toPromise()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          console.log(doc.data())
           parent.comments.push(doc.data());
           parent.comments[parent.comments.length - 1].commentid = doc.id;
           parent.comments[parent.comments.length - 1].replies = [];
           parent.comments[parent.comments.length - 1].loadrepliesvar = true;
+          parent.comments[parent.comments.length - 1].uservote = 0;
           parent.comments[parent.comments.length - 1].tempreplydate = new Date(
             'July 21, 1993 01:15:00'
           );
           parent.tempdate = parent.comments[parent.comments.length - 1].time;
+        parent.db.collection('comments').doc(doc.id).collection('votes', (ref) =>{
+            let query = ref;
+            query.where('uid','==',parent.curruser);
+            return query;
+        }
+        ).get().toPromise().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.id);
+            parent.comments[parent.comments.length - 1].uservote = doc.data().vote;
+            parent.comments[parent.comments.length - 1].voteid = doc.id;
+          })
+        })
+         
         });
         this.getuser();
         this.addreply();
+      
       })
       .catch((error) => {
         console.log('Error getting document:', error);
       });
+
   }
 
   getuser() {
@@ -128,6 +169,7 @@ export class CommentsComponent implements OnInit {
         time: date,
         uid: user.uid,
         commentid: com.commentid,
+        vote: 0
       });
     } else {
       const dialogRef2 = this.dialog.open(LoginComponent);
@@ -158,10 +200,26 @@ export class CommentsComponent implements OnInit {
             uid: doc.data().uid,
             commentid: doc.data().commentid,
             time: doc.data().time,
+            replyid: doc.id,
+            uservote: 0,
+            voteid: ''
           });
           parent.getuserdata();
           arrayItem.tempreplydate = doc.data().time;
           console.log(arrayItem);
+          parent.db.collection('replies').doc(doc.id).collection('votes', (ref) =>{
+            let query = ref;
+            query.where('uid','==',parent.curruser);
+            return query;
+        }
+        ).get().toPromise().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.id);
+            arrayItem.replies.uservote = doc.data().vote;
+            arrayItem.replies.voteid = doc.id;
+          })
+        })
+
         });
       })
       .catch((error) => {
@@ -203,5 +261,172 @@ export class CommentsComponent implements OnInit {
   }
   morereplies(com) {
     this.getreplies(com);
+  }
+
+   upvote(commentid,voteid,uservote){
+    var vote = uservote == 1 ? 0 : 1;
+    var parent = this;
+    this.wait = true;
+    var curruser = this.curruser;
+    var index = this.comments.findIndex(obj => obj.commentid === commentid);
+    console.log(this.wait);
+    if(curruser == null){
+      const dialogRef2 = this.dialog.open(LoginComponent);
+
+      dialogRef2.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed');
+      });
+      this.openSnackBar('Login to vote', 'OKAY');
+    }
+    else{
+    if (voteid){
+      this.db.collection('comments').doc(commentid).collection('votes').doc(voteid).update({
+        vote: vote
+      }).then(function(docRef) {
+        console.log(parent.wait);
+        parent.comments[index].uservote = vote;
+        if (uservote == 0){
+          console.log(parent.wait);
+          parent.db.collection('comments').doc(commentid).update({
+            votes: parent.increment 
+          }).then(function(docRef) {
+          parent.comments[index].votes =parent.comments[index].votes+ 1
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+        else if(uservote == 1){
+          console.log(parent.wait);
+          parent.db.collection('comments').doc(commentid).update({
+            votes: parent.decrement 
+          }).then(function(docRef) {
+          parent.comments[index].votes = parent.comments[index].votes- 1
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+        else if(uservote == -1){
+          console.log(parent.wait);
+          parent.db.collection('comments').doc(commentid).update({
+            votes: parent.increment2 
+          }).then(function(docRef) {
+          parent.comments[index].votes = parent.comments[index].votes+2
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+      })
+    }else{
+      this.db.collection('comments').doc(commentid).collection('votes').add({
+        uid: curruser,
+        vote: vote
+      }).then(function(docRef) {
+        parent.comments[index].uservote = vote;
+        parent.comments[index].voteid = docRef.id
+        if (uservote == 0){
+          parent.db.collection('comments').doc(commentid).update({
+            votes: parent.increment 
+          }).then(function(docRef) {
+          parent.comments[index].votes = parent.comments[index].votes +1
+          parent.wait = false;
+          })
+        }
+        else if(uservote == 1){
+          parent.db.collection('comments').doc(commentid).update({
+            votes: parent.decrement 
+          }).then(function(docRef) {
+          parent.comments[index].votes = parent.comments[index].votes - 1
+          parent.wait = false;
+          })
+        }
+        else if(uservote == -1){
+          parent.db.collection('comments').doc(commentid).update({
+            votes: parent.increment2 
+          }).then(function(docRef) {
+          parent.comments[index].votes = parent.comments[index].votes + 2
+          parent.wait = false;
+          })
+        }
+      })
+  }}
+}
+  downvote(commentid,voteid,uservote){
+    var vote = uservote == -1 ? 0 : -1;
+    var parent = this;
+    this.wait = true
+    var index = this.comments.findIndex(obj => obj.commentid === commentid);
+     var curruser = this.curruser;
+     console.log(voteid);
+      if(curruser == null){
+        const dialogRef2 = this.dialog.open(LoginComponent);
+
+        dialogRef2.afterClosed().subscribe((result) => {
+          console.log('The dialog was closed');
+        });
+        this.openSnackBar('Login to vote', 'OKAY');
+      }
+      else{
+      if (voteid){
+        this.db.collection('comments').doc(commentid).collection('votes').doc(voteid).update({
+          vote: vote
+        }).then(function() {
+          parent.comments[index].uservote = vote;
+          if (uservote == 0){
+            parent.db.collection('comments').doc(commentid).update({
+              votes: parent.decrement 
+            }).then(function() {
+            parent.comments[index].votes = parent.comments[index].votes - 1
+            parent.wait = false
+            })
+          }
+          else if (uservote== -1){
+            parent.db.collection('comments').doc(commentid).update({
+              votes: parent.increment 
+            }).then(function() {
+            parent.comments[index].votes = parent.comments[index].votes + 1
+            parent.wait = false
+            })
+          }
+          else if (uservote== 1){
+            parent.db.collection('comments').doc(commentid).update({
+              votes: parent.decrement2 
+            }).then(function() {
+            parent.comments[index].votes = parent.comments[index].votes -2
+            parent.wait = false
+            })
+          }
+        })}else{
+        this.db.collection('comments').doc(commentid).collection('votes').add({
+          uid: curruser,
+          vote: vote
+        }).then(function(docRef) {
+          parent.comments[index].uservote = vote;
+          parent.comments[index].voteid = docRef.id
+          if (uservote == 0){
+            parent.db.collection('comments').doc(commentid).update({
+              votes: parent.decrement 
+            }).then(function() {
+            parent.comments[index].votes = parent.comments[index].votes - 1
+            parent.wait = false;
+            })
+          }
+          else if (uservote== -1){
+            parent.db.collection('comments').doc(commentid).update({
+              votes: parent.increment 
+            }).then(function() {
+            parent.comments[index].votes = parent.comments[index].votes+ 1
+            parent.wait =false
+            })
+          }
+          else if (uservote== 1){
+            parent.db.collection('comments').doc(commentid).update({
+              votes: parent.decrement2 
+            }).then(function() {
+            parent.comments[index].votes =parent.comments[index].votes- 2
+            parent.wait = false
+            })
+          }
+        })
+      }}
   }
 }

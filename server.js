@@ -82,6 +82,7 @@ app.get("/fetchshows", (req, res) => {
           title: doc.data().title,
           rating: doc.data().rating,
           poster: doc.data().poster,
+          avgrating: doc.data().avgrating,
           id: doc.id,
           image: "",
         });

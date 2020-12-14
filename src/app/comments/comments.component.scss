@@ -33,3 +33,66 @@
   color: rgb(47, 0, 255);
   cursor: pointer;
 }
+
+h1 {
+  font-family: sans-serif;
+}
+
+.vote {
+  border: none;
+  background-color: white;
+  width: 47px;
+  height: 21.5px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  &:active {
+    outline: none;
+    border: none;
+  }
+  
+  &:focus {
+    outline: 0;
+  }
+}
+
+.upArrow {
+  x: 0px;
+  y: 0px;
+  enable-background: new 0 0 11.5 6.4;
+  path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    margin: 0;
+  }
+}
+
+.downArrow {
+  x: 0px;
+  y: 0px;
+  enable-background: new 0 0 11.5 6.4;
+  path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    
+  }
+}
+
+#upButton :hover {
+  fill: #6CC576;
+  cursor: pointer;
+}
+
+#downButton :hover {
+  fill: #FF586C;
+  cursor: pointer;
+}
+.style1{
+  fill: #6CC576;
+}
+.style2{
+  fill: #FF586C;
+}
+.style3{
+  fill: #BBBBBB;
+}
