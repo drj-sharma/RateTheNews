@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&display=swap");
+.anchor-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 80px;
+  font-family: 'Sawarabi Mincho', sans-serif;
+  font-size: 16px;
+  padding: 0px 4%;
+  padding-bottom: 1.5em;
+}
+
+.anchor-main .anchor-name {
+  font-size: 30px;
+  padding-bottom: 20px;
+}
+
+.anchor-main .anchor-avatar {
+  width: 200px;
+}
+
+.anchor-main .slider {
+  display: block;
+}
+
+.anchor-main svg {
+  height: 10px;
+  background-size: 100px 82px;
+  stroke: #94d31b;
+}
+
+.anchor-main .star-rating {
+  font-size: 30px;
+}
+
+.anchor-other {
+  padding: 0px 4%;
+}
+
+.anchor-other .photos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=anchor.component.css.map */

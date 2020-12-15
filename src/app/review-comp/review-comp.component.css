@@ -1,0 +1,53 @@
+#container {
+  margin-right: 10vw;
+  margin-left: 10vw;
+  font-size: 12px;
+}
+
+#top {
+  margin-top: 30px;
+}
+
+#top h1 {
+  display: inline-block;
+}
+
+#top button {
+  display: inline-block;
+  margin-left: 600px;
+}
+
+#rating img {
+  display: inline-block;
+}
+
+#rating h4 {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+#rating #user {
+  margin-left: 60px;
+  color: orange;
+}
+
+#helpful h4 {
+  display: inline-block;
+  color: #77797b;
+}
+
+#helpful button {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+#review {
+  margin-top: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+  background-color: #f2f3f4;
+}
+/*# sourceMappingURL=review-comp.component.css.map */
