@@ -4,6 +4,7 @@ import { reviews } from '../models/reviews';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ParseError } from '@angular/compiler';
 
 @Component({
   selector: 'app-write-review',
@@ -51,11 +52,11 @@ export class WriteReviewComponent implements OnInit {
       .toPromise()
       .then((doc) => {
         if (doc.exists) {
-          var newNumRatings = doc.data().numrating + 1;
+          var newNumRatings =  parseInt(doc.data().numrating + 1);
 
           var oldRatingTotal = doc.data().avgrating * doc.data().numrating;
           console.log(oldRatingTotal);
-          var newAvgRating = ((oldRatingTotal + revs.rating) / newNumRatings).toFixed(1);
+          var newAvgRating =  parseFloat(((oldRatingTotal + revs.rating) / newNumRatings).toFixed(1));
           docRef.update({avgrating: newAvgRating,numrating:newNumRatings});
 
 
