@@ -29,7 +29,6 @@ export class CommentsComponent implements OnInit {
   increment2 = firebase.firestore.FieldValue.increment(2);
   decrement2= firebase.firestore.FieldValue.increment(-2);
   wait = false;
-  waitr = false;
 
   public show = false;
   constructor(
@@ -84,32 +83,22 @@ export class CommentsComponent implements OnInit {
       .toPromise()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.data())
           parent.comments.push(doc.data());
+          
           parent.comments[parent.comments.length - 1].commentid = doc.id;
           parent.comments[parent.comments.length - 1].replies = [];
           parent.comments[parent.comments.length - 1].loadrepliesvar = true;
           parent.comments[parent.comments.length - 1].uservote = 0;
+          parent.comments[parent.comments.length - 1].voteid = null;
           parent.comments[parent.comments.length - 1].tempreplydate = new Date(
             'July 21, 1993 01:15:00'
           );
           parent.tempdate = parent.comments[parent.comments.length - 1].time;
-        parent.db.collection('comments').doc(doc.id).collection('votes', (ref) =>{
-            let query = ref;
-            query.where('uid','==',parent.curruser);
-            return query;
-        }
-        ).get().toPromise().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(doc.id);
-            parent.comments[parent.comments.length - 1].uservote = doc.data().vote;
-            parent.comments[parent.comments.length - 1].voteid = doc.id;
-          })
-        })
          
-        });
+        })
         this.getuser();
         this.addreply();
+        this.getuservote();
       
       })
       .catch((error) => {
@@ -202,25 +191,17 @@ export class CommentsComponent implements OnInit {
             time: doc.data().time,
             replyid: doc.id,
             uservote: 0,
-            voteid: ''
+            votes: doc.data().votes,
+            voteid: null
           });
           parent.getuserdata();
           arrayItem.tempreplydate = doc.data().time;
+
           console.log(arrayItem);
-          parent.db.collection('replies').doc(doc.id).collection('votes', (ref) =>{
-            let query = ref;
-            query.where('uid','==',parent.curruser);
-            return query;
-        }
-        ).get().toPromise().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(doc.id);
-            arrayItem.replies.uservote = doc.data().vote;
-            arrayItem.replies.voteid = doc.id;
-          })
-        })
+          
 
         });
+        this.getuservotereply();
       })
       .catch((error) => {
         console.log('Error getting document:', error);
@@ -269,7 +250,7 @@ export class CommentsComponent implements OnInit {
     this.wait = true;
     var curruser = this.curruser;
     var index = this.comments.findIndex(obj => obj.commentid === commentid);
-    console.log(this.wait);
+    console.log(voteid);
     if(curruser == null){
       const dialogRef2 = this.dialog.open(LoginComponent);
 
@@ -279,7 +260,8 @@ export class CommentsComponent implements OnInit {
       this.openSnackBar('Login to vote', 'OKAY');
     }
     else{
-    if (voteid){
+    if (voteid != null){
+      console.log('yes')
       this.db.collection('comments').doc(commentid).collection('votes').doc(voteid).update({
         vote: vote
       }).then(function(docRef) {
@@ -310,7 +292,7 @@ export class CommentsComponent implements OnInit {
           parent.db.collection('comments').doc(commentid).update({
             votes: parent.increment2 
           }).then(function(docRef) {
-          parent.comments[index].votes = parent.comments[index].votes+2
+          parent.comments[index].votes = parent.comments[index].votes + 2
           parent.wait = false;
           console.log(parent.wait);
           })
@@ -366,7 +348,7 @@ export class CommentsComponent implements OnInit {
         this.openSnackBar('Login to vote', 'OKAY');
       }
       else{
-      if (voteid){
+      if (voteid != null){
         this.db.collection('comments').doc(commentid).collection('votes').doc(voteid).update({
           vote: vote
         }).then(function() {
@@ -428,5 +410,222 @@ export class CommentsComponent implements OnInit {
           }
         })
       }}
+  }
+  getuservote(){
+    this.comments.forEach((array) => {
+        if(this.curruser == null){
+          return;
+
+        }else{
+        this.db.collection('comments').doc(array.commentid).collection('votes', (ref) => ref.where('uid','==',this.curruser))
+            .get().toPromise().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              console.log(this.curruser)
+              console.log(doc.data());
+              array.uservote = doc.data().vote;
+              array.voteid = doc.id;
+              console.log(this.comments);
+            })
+          })}
+  })
+  }
+  upvotereply(commentid,replyid,voteid,uservote){
+    var vote = uservote == 1 ? 0 : 1;
+    var parent = this;
+    this.wait = true;
+    var curruser = this.curruser;
+    var index1 = this.comments.findIndex(obj => obj.commentid === commentid);
+    var index = this.comments[index1].replies.findIndex(obj => obj.replyid === replyid);
+    console.log(voteid);
+    if(curruser == null){
+      const dialogRef2 = this.dialog.open(LoginComponent);
+
+      dialogRef2.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed');
+      });
+      this.openSnackBar('Login to vote', 'OKAY');
+    }
+    else{
+    if (voteid != null){
+      console.log('yes')
+      this.db.collection('replies').doc(replyid).collection('votes').doc(voteid).update({
+        vote: vote
+      }).then(function(docRef) {
+        console.log(parent.wait);
+        parent.comments[index1].replies[index].uservote = vote;
+        if (uservote == 0){
+          console.log(parent.wait);
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.increment 
+          }).then(function(docRef) {
+          parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes+ 1
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+        else if(uservote == 1){
+          console.log(parent.wait);
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.decrement 
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes - 1
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+        else if(uservote == -1){
+          console.log(parent.wait);
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.increment2 
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes+ 2
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+      })
+    }else{
+      this.db.collection('replies').doc(replyid).collection('votes').add({
+        uid: curruser,
+        vote: vote
+      }).then(function(docRef) {
+        parent.comments[index1].replies[index].uservote = vote;
+        parent.comments[index1].replies[index].voteid = docRef.id
+        if (uservote == 0){
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.increment 
+          }).then(function(docRef) {
+          parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes+ 1
+          parent.wait = false;
+          })
+        }
+        else if(uservote == 1){
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.decrement 
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes- 1
+          parent.wait = false;
+          })
+        }
+        else if(uservote == -1){
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.increment2 
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes+ 2
+          parent.wait = false;
+          })
+        }
+      })
+  }}
+  }
+  downvotereply(commentid,replyid,voteid,uservote){
+    var vote = uservote == -1 ? 0 : -1;
+    var parent = this;
+    this.wait = true;
+    var curruser = this.curruser;
+    var index1 = this.comments.findIndex(obj => obj.commentid === commentid);
+    var index = this.comments[index1].replies.findIndex(obj => obj.replyid === replyid);
+    console.log(voteid);
+    if(curruser == null){
+      const dialogRef2 = this.dialog.open(LoginComponent);
+
+      dialogRef2.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed');
+      });
+      this.openSnackBar('Login to vote', 'OKAY');
+    }
+    else{
+    if (voteid != null){
+      console.log('yes')
+      this.db.collection('replies').doc(replyid).collection('votes').doc(voteid).update({
+        vote: vote
+      }).then(function(docRef) {
+        console.log(parent.wait);
+        parent.comments[index1].replies[index].uservote = vote;
+        if (uservote == 0){
+          console.log(parent.wait);
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.decrement 
+          }).then(function(docRef) {
+          parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes- 1
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+        else if(uservote == 1){
+          console.log(parent.wait);
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.decrement2 
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes - 2
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+        else if(uservote == -1){
+          console.log(parent.wait);
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.increment
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes+ 1
+          parent.wait = false;
+          console.log(parent.wait);
+          })
+        }
+      })
+    }else{
+      this.db.collection('replies').doc(replyid).collection('votes').add({
+        uid: curruser,
+        vote: vote
+      }).then(function(docRef) {
+        parent.comments[index1].replies[index].uservote = vote;
+        parent.comments[index1].replies[index].voteid = docRef.id
+        if (uservote == 0){
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.decrement 
+          }).then(function(docRef) {
+          parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes- 1
+          parent.wait = false;
+          })
+        }
+        else if(uservote == 1){
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.decrement2
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes- 2
+          parent.wait = false;
+          })
+        }
+        else if(uservote == -1){
+          parent.db.collection('replies').doc(replyid).update({
+            votes: parent.increment
+          }).then(function(docRef) {
+            parent.comments[index1].replies[index].votes = parent.comments[index1].replies[index].votes+ 1
+          parent.wait = false;
+          })
+        }
+      })
+  }}
+    
+  }
+  getuservotereply(){
+    this.comments.forEach((array) => {
+      array.replies.forEach((reply) => {
+        if(this.curruser == null){
+          return;
+
+        }else{
+        this.db.collection('replies').doc(reply.replyid).collection('votes', (ref) => ref.where('uid','==',this.curruser))
+            .get().toPromise().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              console.log(this.curruser)
+              console.log(doc.data());
+              reply.uservote = doc.data().vote;
+              reply.voteid = doc.id;
+              console.log(this.comments);
+            })
+          })}
+    })
+  })
   }
 }
