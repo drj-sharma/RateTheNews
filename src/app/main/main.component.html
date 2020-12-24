@@ -44,7 +44,7 @@
       </div>
       <div id="rating">
         <img src="../../assets/images/star.png" />
-        <h4>{{ show.rating }}</h4>
+        <h4>{{ show.avgrating }}</h4>
       </div>
     </div>
   </mat-tab>
@@ -59,6 +59,16 @@
       <div id="rating">
         <img src="../../assets/images/star.png" />
         <h4>7.9</h4>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Articles">
+    <div class="articles" *ngFor="let article of articles">
+      <div class="articleTile" (click)="viewArticle(article.docId)">
+        <p class="title">
+          <i> {{ article.title }} </i>
+        </p>
+        <p class="time">&nbsp; {{ article.time | date: "short" }}</p>
       </div>
     </div>
   </mat-tab>

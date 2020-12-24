@@ -70,9 +70,9 @@ app.put("/fetchreviews", (req, res) => {
       console.log("Error getting documents: ", error);
     });
 });
-
+// fetch show
 app.get("/fetchshows", (req, res) => {
-  data = [];
+  let data = [];
   db.collection("news-shows")
     .get()
     .then(function (querySnapshot) {
@@ -82,6 +82,7 @@ app.get("/fetchshows", (req, res) => {
           title: doc.data().title,
           rating: doc.data().rating,
           poster: doc.data().poster,
+          avgrating: doc.data().avgrating,
           id: doc.id,
           image: "",
         });
@@ -92,6 +93,28 @@ app.get("/fetchshows", (req, res) => {
     .catch(function (error) {
       console.log("Error getting documents: ", error);
     });
+});
+/** fetch articles
+ * @return (articles: JSON)
+ */
+app.get("/fetchArticles", (req, res) => {
+  let data = [];
+  db.collection("articles")
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log('Doc Id:', doc.id);
+        data.push({
+          docId: doc.id,
+          title: doc.data().title,
+          time: doc.data().time,
+          uid: doc.data().uid
+        });
+        console.log(data);
+      });
+      res.send(data);
+    })
+    .catch(e => console.error("Errow While Fetching Articles", e));
 });
 // editorjs image uploader
 app.post("/image-upload", upload.single("image"), (req, res) => {

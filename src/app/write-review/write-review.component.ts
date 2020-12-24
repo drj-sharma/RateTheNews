@@ -3,7 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { reviews } from '../models/reviews';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog'
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ParseError } from '@angular/compiler';
 
 @Component({
   selector: 'app-write-review',
@@ -13,6 +14,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog'
 export class WriteReviewComponent implements OnInit {
   reviewsCollection: AngularFirestoreCollection<reviews>;
   date = new Date();
+  strating: string;
   revs: reviews = {
     title: '',
     content: '',
@@ -37,10 +39,38 @@ export class WriteReviewComponent implements OnInit {
     console.log(this.data)
   }
   submitReview(revs: reviews) {
+    var parent = this;
     const user = firebase.auth().currentUser;
     revs.user = user.uid;
     revs.showid = this.data.dataKey;
+    revs.rating = parseInt(this.strating)
+    console.log(revs)
     this.reviewsCollection.add(revs);
+    const docRef = this.afs.collection('news-shows').doc(revs.showid);
+    docRef
+      .get()
+      .toPromise()
+      .then((doc) => {
+        if (doc.exists) {
+          var newNumRatings =  parseInt(doc.data().numrating + 1);
+
+          var oldRatingTotal = doc.data().avgrating * doc.data().numrating;
+          console.log(oldRatingTotal);
+          var newAvgRating =  parseFloat(((oldRatingTotal + revs.rating) / newNumRatings).toFixed(1));
+          docRef.update({avgrating: newAvgRating,numrating:newNumRatings});
+
+
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
+    
+
+
     this.openSnackBar('Rating Added Successfully', 'OKAY');
     this.clearFields();
   }

@@ -77,6 +77,8 @@ export class YourArticlesComponent implements OnInit {
     this.router.navigate(['article']);
   }
   async getArticleHeadingWithDate(articlesID: string[]) {
+    console.log(this.articlesID);
+    
     for (const article of articlesID) {
       this.http
         .get('http://localhost:3000/getArticleHeadings?article=' + article, {
