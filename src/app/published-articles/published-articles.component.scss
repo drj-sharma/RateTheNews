@@ -70,13 +70,71 @@
   position: sticky;
   top: 0;
   button:first-child {
-    color: white;
-    background: #e25822;
     margin-bottom: 40px;
   }
   button:last-child {
     color: white;
     background: #31d2fa;
+    margin-top: 40ppx;
     margin-bottom: 40px;
   }
+}
+
+.vote {
+  border: none;
+  background-color: white;
+  width: 47px;
+  height: 21.5px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  &:active {
+    outline: none;
+    border: none;
+  }
+  
+  &:focus {
+    outline: 0;
+  }
+}
+
+.upArrow {
+  x: 0px;
+  y: 0px;
+  enable-background: new 0 0 11.5 6.4;
+  path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    margin: 0;
+  }
+}
+
+.downArrow {
+  x: 0px;
+  y: 0px;
+  enable-background: new 0 0 11.5 6.4;
+  path {
+    fill-rule: evenodd;
+    clip-rule: evenodd;
+    
+  }
+}
+
+#upButton :hover {
+  fill: #6CC576;
+  cursor: pointer;
+}
+
+#downButton :hover {
+  fill: #FF586C;
+  cursor: pointer;
+}
+.style1{
+  fill: #6CC576;
+}
+.style2{
+  fill: #FF586C;
+}
+.style3{
+  fill: #BBBBBB;
 }
