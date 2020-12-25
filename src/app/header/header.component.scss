@@ -12,6 +12,7 @@
   top: 50%;
   left: 15%;
   transform: translateY(-50%);
+  margin-right: 3px;
   display: inline-block;
   vertical-align: middle;
 }
@@ -46,6 +47,7 @@ h4 {
 }
 ul.menu li {
   display: inline;
+  padding-right: 5px;
 }
 a {
   text-decoration: none;
@@ -61,6 +63,7 @@ a {
   transform: translateY(-50%);
   list-style-type: none;
   display: inline-block;
+  margin-left: 10px;
 }
 .user-dropdown #displayName {
   display: inline-block;
@@ -71,4 +74,9 @@ a {
 }
 img {
   transform: translateY(30%);
+}
+
+.write-story {
+  color: blueviolet;
+  border: 1px solid blueviolet;
 }
