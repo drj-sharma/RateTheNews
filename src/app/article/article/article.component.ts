@@ -105,7 +105,7 @@ export class ArticleComponent implements OnInit {
       this.outputArray.title = this.title;
       this.outputArray.uid = this.uid;
       this.outputArray.time = Date.now().toString();
-      this.outputArray.votes = 
+      this.outputArray.votes = 0;
       this.outputArray.articleJSON = output.blocks;
       // adding to the collection
       this.articlesCollections
