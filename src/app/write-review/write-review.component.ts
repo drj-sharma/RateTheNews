@@ -43,7 +43,7 @@ export class WriteReviewComponent implements OnInit {
     const user = firebase.auth().currentUser;
     revs.user = user.uid;
     revs.showid = this.data.dataKey;
-    revs.rating = parseInt(this.strating)
+    revs.rating = parseFloat(this.strating)
     console.log(revs)
     this.reviewsCollection.add(revs);
     const docRef = this.afs.collection('news-shows').doc(revs.showid);

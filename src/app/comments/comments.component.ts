@@ -65,12 +65,7 @@ export class CommentsComponent implements OnInit {
           articleID: this.articleID,
           votes: 0,
         });
-      // .then(function(docRef) {
-      //   parent.db.collection('votes').add({commentid: docRef.id,upvotes: [],downvotes: []})
-      //   .then(function(docRef2) {
-      //       parent.db.collection('comments').doc(docRef.id).update({voteid: docRef2.id})
-      //     })
-      // })
+      
     } else {
       const dialogRef2 = this.dialog.open(LoginComponent);
 
