@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import {MatDividerModule} from '@angular/material/divider'; 
 
 const material = [
   MatFormFieldModule,
@@ -31,6 +32,7 @@ const material = [
   MatNativeDateModule,
   MatChipsModule,
   MatBottomSheetModule,
+  MatDividerModule
 ];
 
 @NgModule({

@@ -15,9 +15,6 @@ import {
 } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../services/user.model';
-import { CommentsComponent } from '../comments/comments.component';
-import { NumberValueAccessor } from '@angular/forms';
-
 @Component({
   selector: 'app-published-articles',
   templateUrl: './published-articles.component.html',
@@ -48,7 +45,6 @@ export class PublishedArticlesComponent implements OnInit {
 
   constructor(
     private afs: AngularFirestore,
-    private afAuth: AngularFireAuth,
     private route: ActivatedRoute,
     private http: HttpClient,
     private bottomSheet: MatBottomSheet,
@@ -106,9 +102,12 @@ export class PublishedArticlesComponent implements OnInit {
         (err) => console.log(err)
       );
   }
-  openComments(): void {
-    this.bottomSheet.open(CommentsComponent, {
-      data: { articleID: this.articleID },
+  scrollToEnd(element: any): void {
+    console.log(element);
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
     });
   }
   fetchcurruserid(){
