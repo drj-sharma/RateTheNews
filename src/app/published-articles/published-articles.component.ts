@@ -1,20 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { LoginComponent } from 'src/app/login/login.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../services/user.model';
+
 @Component({
   selector: 'app-published-articles',
   templateUrl: './published-articles.component.html',
@@ -47,7 +43,6 @@ export class PublishedArticlesComponent implements OnInit {
     private afs: AngularFirestore,
     private route: ActivatedRoute,
     private http: HttpClient,
-    private bottomSheet: MatBottomSheet,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
   ) {}
@@ -111,7 +106,15 @@ export class PublishedArticlesComponent implements OnInit {
     });
   }
   fetchcurruserid(){
-    this.curruser = firebase.auth().currentUser.uid;
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        this.curruser = user['uid'];
+      } else {
+        // No user is signed in.
+        this.curruser = null;
+      }
+    });
   }
   openSnackBar(msg: string, action: string) {
     this.snackBar.open(msg, action, {

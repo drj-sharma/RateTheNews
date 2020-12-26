@@ -16,10 +16,10 @@ export class CommentsComponent implements OnInit {
   replybox = '';
   comments: any[] = [];
   comment: any;
-  i = 10;
   subscription;
   uservote = 0;
-  tempdate = new Date('July 21, 1993 01:15:00');
+  tempdate = new Date();
+  tempvote = 0;
   curruser: string;
   upvoteimg = '../../assets/images/up-arrow.png';
   increment = firebase.firestore.FieldValue.increment(1);
@@ -29,6 +29,9 @@ export class CommentsComponent implements OnInit {
   wait = false;
   loadingOff = true;
   public show = false;
+  commentsort: string = 'votes';
+
+
   constructor(
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -37,7 +40,7 @@ export class CommentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchcurruserid();
-    this.getComments();
+    this.getCommentsvotes();
   }
   fetchcurruserid() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -81,15 +84,16 @@ export class CommentsComponent implements OnInit {
     this.db
       .collection('comments', (ref) =>
         ref
-          .orderBy('time')
+          .orderBy('time','desc')
           .where('articleID', '==', `${this.articleID}`)
           .startAfter(this.tempdate)
-          .limit(this.i)
+          .limit(10)
       )
       .get()
       .toPromise()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          console.log(doc.id)
           parent.comments.push(doc.data());
 
           parent.comments[parent.comments.length - 1].commentid = doc.id;
@@ -112,6 +116,79 @@ export class CommentsComponent implements OnInit {
       .finally(() => {
         this.loadingOff = false;
       })
+      ;
+  }
+
+ async getCommentsvotes(){
+    const parent = this;
+    await this.db
+      .collection('comments', (ref) =>
+        ref
+          .orderBy('votes', "desc")
+          .orderBy('time','desc')
+          .where('articleID', '==', `${this.articleID}`)
+          .limit(10)
+      )
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id)
+          parent.comments.push(doc.data());
+
+          parent.comments[parent.comments.length - 1].commentid = doc.id;
+          parent.comments[parent.comments.length - 1].replies = [];
+          parent.comments[parent.comments.length - 1].loadrepliesvar = true;
+          parent.comments[parent.comments.length - 1].uservote = 0;
+          parent.comments[parent.comments.length - 1].voteid = null;
+          parent.comments[parent.comments.length - 1].tempreplydate = new Date(
+            'July 21, 1993 01:15:00'
+          );
+          parent.tempvote = parent.comments[parent.comments.length - 1].votes;
+          parent.tempdate = parent.comments[parent.comments.length - 1].time;
+        });
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      })
+      .finally(() => {
+        this.loadingOff = false;
+      })
+
+        await this.db
+      .collection('comments', (ref) =>
+        ref
+          .orderBy('time', "desc")
+          .where('articleID', '==', `${this.articleID}`)
+          .where('votes','==',this.tempvote)
+          .startAfter(this.tempdate)
+      )
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data())
+          parent.comments.push(doc.data());
+
+          parent.comments[parent.comments.length - 1].commentid = doc.id;
+          parent.comments[parent.comments.length - 1].replies = [];
+          parent.comments[parent.comments.length - 1].loadrepliesvar = true;
+          parent.comments[parent.comments.length - 1].uservote = 0;
+          parent.comments[parent.comments.length - 1].voteid = null;
+          parent.comments[parent.comments.length - 1].tempreplydate = new Date(
+            'July 21, 1993 01:15:00'
+          );
+          parent.tempvote = parent.comments[parent.comments.length - 1].votes;
+          parent.tempdate = parent.comments[parent.comments.length - 1].time;
+        });
+      })
+
+        
+         
+        this.getuser();
+        this.addreply();
+        this.getuservote();
+      
       ;
   }
 
@@ -238,9 +315,82 @@ export class CommentsComponent implements OnInit {
       });
     });
   }
-  getmoreComments() {
-    this.i = this.i + 10;
-    this.getComments();
+  async getmoreComments() {
+    if(this.commentsort == 'newest'){
+      this.getComments();
+    }
+    else if(this.commentsort == 'votes'){
+      const parent = this;
+      await this.db
+        .collection('comments', (ref) =>
+          ref
+            .orderBy('votes', "desc")
+            .orderBy('time','desc')
+            .where('articleID', '==', `${this.articleID}`)
+            .startAfter(this.tempvote,this.tempdate)
+            .limit(10)
+        )
+        .get()
+        .toPromise()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log('1');
+            console.log(doc.data())
+            parent.comments.push(doc.data());
+  
+            parent.comments[parent.comments.length - 1].commentid = doc.id;
+            parent.comments[parent.comments.length - 1].replies = [];
+            parent.comments[parent.comments.length - 1].loadrepliesvar = true;
+            parent.comments[parent.comments.length - 1].uservote = 0;
+            parent.comments[parent.comments.length - 1].voteid = null;
+            parent.comments[parent.comments.length - 1].tempreplydate = new Date(
+              'July 21, 1993 01:15:00'
+            );
+            parent.tempvote = parent.comments[parent.comments.length - 1].votes;
+            parent.tempdate = parent.comments[parent.comments.length - 1].time;
+          });
+        })
+        .catch((error) => {
+          console.log('Error getting document:', error);
+        })
+        .finally(() => {
+          this.loadingOff = false;
+        });
+
+        await  this.db
+        .collection('comments', (ref) =>
+        ref
+          .orderBy('time', "desc")
+          .where('articleID', '==', `${this.articleID}`)
+          .where('votes','==',this.tempvote)
+          .startAfter(this.tempdate)
+      )
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          parent.comments.push(doc.data());
+
+          parent.comments[parent.comments.length - 1].commentid = doc.id;
+          parent.comments[parent.comments.length - 1].replies = [];
+          parent.comments[parent.comments.length - 1].loadrepliesvar = true;
+          parent.comments[parent.comments.length - 1].uservote = 0;
+          parent.comments[parent.comments.length - 1].voteid = null;
+          parent.comments[parent.comments.length - 1].tempreplydate = new Date(
+            'July 21, 1993 01:15:00'
+          );
+          parent.tempvote = parent.comments[parent.comments.length - 1].votes;
+          parent.tempdate = parent.comments[parent.comments.length - 1].time;
+        });
+      })
+           
+          this.getuser();
+          this.addreply();
+          this.getuservote();
+        
+
+    }
+    
   }
   loadreplies(com) {
     com.loadrepliesvar = false;
@@ -795,5 +945,20 @@ export class CommentsComponent implements OnInit {
         }
       });
     });
+  }
+
+  onChange(value){
+    if (value == 'newest'){
+      this.tempdate =  new Date();
+      this.commentsort = value;
+      this.comments = [];
+      this.getComments()
+    }
+    else if(value == 'votes'){
+      this.tempdate =  new Date();
+      this.commentsort = value;
+      this.comments = [];
+      this.getCommentsvotes()
+    }
   }
 }
