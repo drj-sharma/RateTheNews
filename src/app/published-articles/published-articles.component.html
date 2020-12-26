@@ -7,7 +7,12 @@
     <button mat-raised-button mat-icon-button aria-label="likes">
       <mat-icon>whatshot</mat-icon>
     </button>
-    <button mat-raised-button mat-icon-button aria-label="comments" (click)="openComments()">
+    <button
+      mat-raised-button
+      mat-icon-button
+      (click)="scrollToEnd(target)"
+      aria-label="comments"
+    >
       <mat-icon>comment</mat-icon>
     </button>
   </div>
@@ -25,12 +30,12 @@
             alt=""
         /></span>
         <span>{{ author.displayName }} | </span>
-        <span>{{ time | date : 'short' }}</span>
+        <span>{{ time | date: "short" }}</span>
         <br />
       </div>
       <ng-container [ngSwitch]="b?.type" *ngFor="let b of data; let i = index">
         <div class="fxlay">
-          <div >
+          <div>
             <!-- Paragraph -->
             <div style="font-size: 20px" *ngSwitchCase="'paragraph'">
               <div
@@ -72,19 +77,26 @@
               }}"
             ></div>
 
-             <!-- Image / Video -->
-                    <div *ngSwitchCase="'image'">
-                        <div class="cdx-block image-tool image-tool--filled" *ngIf="b?.data?.file?.url">
-                            <div class="image-tool__image">
-                                <ng-container *ngIf="b?.data?.file?.url;">
-                                    <img class="image-tool__image-picture"
-                                        [src]="b?.data?.file?.url">
-                                    <div style="text-align: center; margin-top: 5px;" [innerHTML]="b?.data?.caption">
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </div> 
+            <!-- Image / Video -->
+            <div *ngSwitchCase="'image'">
+              <div
+                class="cdx-block image-tool image-tool--filled"
+                *ngIf="b?.data?.file?.url"
+              >
+                <div class="image-tool__image">
+                  <ng-container *ngIf="b?.data?.file?.url">
+                    <img
+                      class="image-tool__image-picture"
+                      [src]="b?.data?.file?.url"
+                    />
+                    <div
+                      style="text-align: center; margin-top: 5px"
+                      [innerHTML]="b?.data?.caption"
+                    ></div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
 
             <!-- Embed -->
             <div *ngSwitchCase="'embed'">
@@ -145,3 +157,4 @@
     </div>
   </div>
 </div>
+<div #target><app-comments [articleID]="this.articleID"></app-comments></div>

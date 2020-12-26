@@ -1,17 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
 import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../services/user.model';
-import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-published-articles',
@@ -32,10 +26,8 @@ export class PublishedArticlesComponent implements OnInit {
   articleID: string;
   constructor(
     private afs: AngularFirestore,
-    private afAuth: AngularFireAuth,
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private bottomSheet: MatBottomSheet
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -78,9 +70,12 @@ export class PublishedArticlesComponent implements OnInit {
         (err) => console.log(err)
       );
   }
-  openComments(): void {
-    this.bottomSheet.open(CommentsComponent, {
-      data: { articleID: this.articleID },
+  scrollToEnd(element: any): void {
+    console.log(element);
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
     });
   }
 }
