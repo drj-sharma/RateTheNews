@@ -12,6 +12,16 @@
       Post
     </button>
   </div>
+  <div id='sort'>
+    <h3>Sort by</h3>
+    <mat-form-field appearance="fill">
+      <select matNativeControl (change)="onChange($event.target.value)">
+        <option value="votes">votes</option>
+        <option value="newest">Newest</option>
+      </select>
+    </mat-form-field>
+  </div>
+  
   <div id="all-comments" *ngFor="let comment of comments">
     <img
       src="{{ comment.userphoto }}"
