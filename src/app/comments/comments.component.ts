@@ -155,36 +155,6 @@ export class CommentsComponent implements OnInit {
         this.loadingOff = false;
       })
 
-        await this.db
-      .collection('comments', (ref) =>
-        ref
-          .orderBy('time', "desc")
-          .where('articleID', '==', `${this.articleID}`)
-          .where('votes','==',this.tempvote)
-          .startAfter(this.tempdate)
-      )
-      .get()
-      .toPromise()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.data())
-          parent.comments.push(doc.data());
-
-          parent.comments[parent.comments.length - 1].commentid = doc.id;
-          parent.comments[parent.comments.length - 1].replies = [];
-          parent.comments[parent.comments.length - 1].loadrepliesvar = true;
-          parent.comments[parent.comments.length - 1].uservote = 0;
-          parent.comments[parent.comments.length - 1].voteid = null;
-          parent.comments[parent.comments.length - 1].tempreplydate = new Date(
-            'July 21, 1993 01:15:00'
-          );
-          parent.tempvote = parent.comments[parent.comments.length - 1].votes;
-          parent.tempdate = parent.comments[parent.comments.length - 1].time;
-        });
-      })
-
-        
-         
         this.getuser();
         this.addreply();
         this.getuservote();
@@ -356,39 +326,11 @@ export class CommentsComponent implements OnInit {
         .finally(() => {
           this.loadingOff = false;
         });
-
-        await  this.db
-        .collection('comments', (ref) =>
-        ref
-          .orderBy('time', "desc")
-          .where('articleID', '==', `${this.articleID}`)
-          .where('votes','==',this.tempvote)
-          .startAfter(this.tempdate)
-      )
-      .get()
-      .toPromise()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          parent.comments.push(doc.data());
-
-          parent.comments[parent.comments.length - 1].commentid = doc.id;
-          parent.comments[parent.comments.length - 1].replies = [];
-          parent.comments[parent.comments.length - 1].loadrepliesvar = true;
-          parent.comments[parent.comments.length - 1].uservote = 0;
-          parent.comments[parent.comments.length - 1].voteid = null;
-          parent.comments[parent.comments.length - 1].tempreplydate = new Date(
-            'July 21, 1993 01:15:00'
-          );
-          parent.tempvote = parent.comments[parent.comments.length - 1].votes;
-          parent.tempdate = parent.comments[parent.comments.length - 1].time;
-        });
-      })
            
           this.getuser();
           this.addreply();
           this.getuservote();
         
-
     }
     
   }
