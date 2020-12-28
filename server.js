@@ -9,7 +9,7 @@ const multer = require("multer");
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 var app = express();
-"use strict";
+("use strict");
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cors());
@@ -103,18 +103,18 @@ app.get("/fetchArticles", (req, res) => {
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
-        console.log('Doc Id:', doc.id);
+        console.log("Doc Id:", doc.id);
         data.push({
           docId: doc.id,
           title: doc.data().title,
           time: doc.data().time,
-          uid: doc.data().uid
+          uid: doc.data().uid,
         });
         console.log(data);
       });
       res.send(data);
     })
-    .catch(e => console.error("Errow While Fetching Articles", e));
+    .catch((e) => console.error("Errow While Fetching Articles", e));
 });
 // editorjs image uploader
 app.post("/image-upload", upload.single("image"), (req, res) => {
@@ -161,24 +161,25 @@ async function uploadImageToStorage(imageFile) {
 // editorjs link previewer
 app.get("/fetchUrl", async (req, res) => {
   let url = req.query.url;
-  let resHTML = await fetch(new URL(url))
-                      .catch((e) => console.log(e));
+  let resHTML = await fetch(new URL(url)).catch((e) => console.log(e));
   const html = await resHTML.text();
   const $ = cheerio.load(html);
   // custom meta-tag function
   const getMetaTag = (value) => {
-    return $(`meta[name=${value}]`).attr("content") ||
-           $(`meta[property="og:${value}"]`).attr("content") ||
-           $(`meta[property="twitter:${value}"]`).attr("content")
-  }
+    return (
+      $(`meta[name=${value}]`).attr("content") ||
+      $(`meta[property="og:${value}"]`).attr("content") ||
+      $(`meta[property="twitter:${value}"]`).attr("content")
+    );
+  };
   const resi = {
     success: 1,
     meta: {
       title: $("title").first().text(),
       description: getMetaTag("description"),
       image: {
-        url: getMetaTag("image")
-      }
+        url: getMetaTag("image"),
+      },
     },
   };
   res.send(resi);
@@ -201,6 +202,25 @@ app.get("/getArticleHeadings", (req, res) => {
     .then((val) => res.send(val.data()))
     .catch((e) => console.log(e));
 });
-// request apis
+/**
+ * @params (uid, showId)
+ * @return (show rating of showId of the requested user uid)
+ **/
+app.get("/getMyRating", (req, res) => {
+  data = [];
+  const query = req.query.query;
+  const i = query.indexOf('-');
+  const showId = query.substring(0, i);
+  const uid = query.substring(i + 1);
+  db.collection("show-ratings")
+    .where("showid", "==", showId)
+    .where("user", "==", uid)
+    .get()
+    .then((snapShot) => {
+      snapShot.forEach((doc) => data.push(doc.data()))
+    })
+    .then(() => res.send(data))
+    .catch((e) => console.error(e));
+});
 
 app.listen(3000, () => console.log("Node.js server is running on port 3000"));
