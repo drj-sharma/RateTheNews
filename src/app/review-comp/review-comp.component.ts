@@ -15,6 +15,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class ReviewCompComponent implements OnInit {
   reviews: any[] = [];
   @Input() id: string;
+  @Input() myReviewId: string;
   users: any[] = [];
 
   constructor(
@@ -34,6 +35,7 @@ export class ReviewCompComponent implements OnInit {
       const dialogRef = this.dialog.open(WriteReviewComponent, {
         data: {
           dataKey: this.id,
+          myReviewId: this.myReviewId
         },
       });
 

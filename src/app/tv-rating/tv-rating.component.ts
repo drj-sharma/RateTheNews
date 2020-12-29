@@ -19,6 +19,7 @@ export class TvRatingComponent implements OnInit {
   vis = false;
   myRating: number;
   alreadyRated = false;
+  myRatingId: string;
   constructor(
     public activatedRoute: ActivatedRoute,
     private db: AngularFirestore,
@@ -77,6 +78,7 @@ export class TvRatingComponent implements OnInit {
       const dialogRef = this.dialog.open(WriteReviewComponent, {
         data: {
           dataKey: this.id,
+          myReviewId: this.myRatingId
         },
       });
       dialogRef.afterClosed().subscribe((result) => {
@@ -105,9 +107,10 @@ export class TvRatingComponent implements OnInit {
       })
       .subscribe(
         (response: any[]) => {
-          if (response.length >= 1) {
+          if (response.length >= 2) {
             this.alreadyRated = true;
             this.myRating = response[0].rating;
+            this.myRatingId = response[1];
           }
         },
         (err) => console.log(err)

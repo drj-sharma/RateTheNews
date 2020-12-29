@@ -10,7 +10,7 @@ import { finalize, tap } from 'rxjs/operators';
 import { ReloadService } from '../reload.service';
 
 @Component({
-  selector: 'upload-task',
+  selector: 'app-upload-task',
   templateUrl: './upload-task.component.html',
   styleUrls: ['./upload-task.component.scss'],
 })
@@ -52,16 +52,14 @@ export class UploadTaskComponent implements OnInit {
       // The file's download URL
       finalize(async () => {
         this.downloadURL = await ref.getDownloadURL().toPromise();
-        this.db
-          .collection('news-shows')
-          .add({
-            title: this.show.title,
-            poster: this.downloadURL,
-            anchor: this.show.anchor,
-            description: this.show.description,
-            avgrating: 0,
-            numrating: 0
-          });
+        this.db.collection('news-shows').add({
+          title: this.show.title,
+          poster: this.downloadURL,
+          anchor: this.show.anchor,
+          description: this.show.description,
+          avgrating: 0,
+          numrating: 0,
+        });
       })
     );
   }

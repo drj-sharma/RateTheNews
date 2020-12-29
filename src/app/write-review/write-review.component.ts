@@ -45,13 +45,17 @@ export class WriteReviewComponent implements OnInit {
     console.log(this.data);
   }
   submitReview(revs: reviews) {
-    const parent = this;
     const user = firebase.auth().currentUser;
     revs.user = user.uid;
     revs.showid = this.data.dataKey;
+    const myReviewId = this.data.myReviewId;
     revs.rating = parseFloat(this.strating);
     console.log(revs);
-    this.reviewsCollection.add(revs);
+    if (myReviewId === undefined) {
+      this.reviewsCollection.add(revs);
+    } else {
+      this.reviewsCollection.doc(myReviewId).set(revs, { merge: true });
+    }
     const docRef = this.afs.collection('news-shows').doc(revs.showid);
     docRef
       .get()
@@ -76,7 +80,7 @@ export class WriteReviewComponent implements OnInit {
       })
       .finally(() => {
         window.location.reload();
-      })
+      });
     this.openSnackBar('Rating Added Successfully', 'OKAY');
     this.clearFields();
   }

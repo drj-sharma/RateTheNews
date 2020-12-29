@@ -19,6 +19,7 @@ const storage = new Storage({
 });
 const bucketref = storage.bucket("ratethenews-20e78.appspot.com");
 var serviceAccount = require("./ratethenews-20e78-firebase-adminsdk-fe5k4-741d5391f5.json");
+const { stringify } = require("@angular/compiler/src/util");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -207,6 +208,7 @@ app.get("/getArticleHeadings", (req, res) => {
  * @return (show rating of showId of the requested user uid)
  **/
 app.get("/getMyRating", (req, res) => {
+  id = '';
   data = [];
   const query = req.query.query;
   const i = query.indexOf('-');
@@ -217,8 +219,12 @@ app.get("/getMyRating", (req, res) => {
     .where("user", "==", uid)
     .get()
     .then((snapShot) => {
-      snapShot.forEach((doc) => data.push(doc.data()))
+      snapShot.forEach((doc) => {
+        data.push(doc.data());
+        id = doc.id;
+      })
     })
+    .then(() => data.push(id))
     .then(() => res.send(data))
     .catch((e) => console.error(e));
 });
