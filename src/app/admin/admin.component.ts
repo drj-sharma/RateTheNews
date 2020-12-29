@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NewsShow } from '../models/NewsShow';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReloadService } from '../reload.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
   submit = false;
-
   isHovering: boolean;
   mySubscription: any;
   file: File;
@@ -20,10 +18,9 @@ export class AdminComponent implements OnInit {
     title: '',
     description: '',
     anchor: '',
-    poster: '',
+    poster: ''
   };
   constructor(
-    private router: Router,
     private snackBar: MatSnackBar,
     private reload: ReloadService
   ) {}
