@@ -27,6 +27,7 @@ export class WriteReviewComponent implements OnInit {
     time: this.date,
     showid: '',
   };
+  prevRating: number;
 
   constructor(
     private afs: AngularFirestore,
@@ -43,6 +44,10 @@ export class WriteReviewComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data);
+    this.revs.title = this.data.myRatingObj.title;
+    this.revs.content = this.data.myRatingObj.content;
+    this.revs.rating = this.data.myRatingObj.rating;
+    this.strating = this.revs.rating.toString();
   }
   submitReview(revs: reviews) {
     const user = firebase.auth().currentUser;

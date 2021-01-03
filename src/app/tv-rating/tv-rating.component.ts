@@ -17,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class TvRatingComponent implements OnInit {
   state$: Observable<object>;
   vis = false;
+  myRatingObj: any[];
   myRating: number;
   alreadyRated = false;
   myRatingId: string;
@@ -78,7 +79,8 @@ export class TvRatingComponent implements OnInit {
       const dialogRef = this.dialog.open(WriteReviewComponent, {
         data: {
           dataKey: this.id,
-          myReviewId: this.myRatingId
+          myReviewId: this.myRatingId,
+          myRatingObj: this.myRatingObj
         },
       });
       dialogRef.afterClosed().subscribe((result) => {
@@ -109,8 +111,11 @@ export class TvRatingComponent implements OnInit {
         (response: any[]) => {
           if (response.length >= 2) {
             this.alreadyRated = true;
+            console.log(response);
+            this.myRatingObj = response[0];
             this.myRating = response[0].rating;
             this.myRatingId = response[1];
+            console.log(response);
           }
         },
         (err) => console.log(err)
