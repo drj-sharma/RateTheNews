@@ -111,7 +111,6 @@ export class TvRatingComponent implements OnInit {
         (response: any[]) => {
           if (response.length >= 2) {
             this.alreadyRated = true;
-            console.log(response);
             this.myRatingObj = response[0];
             this.myRating = response[0].rating;
             this.myRatingId = response[1];
