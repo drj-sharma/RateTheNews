@@ -258,4 +258,4 @@ app.get("/getShowById", (req, res) => {
 
 const PORT = process.env.port || 3000;
 
-app.listen(PORT, () => console.log("Node.js server is running on port 3000"));
+app.listen(PORT, () => console.log(`Node.js server is running on ${PORT}`));
