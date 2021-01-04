@@ -40,8 +40,6 @@ export class YourRatingsComponent implements OnInit {
                 showInstance['myReviewTitle'] = show.title;
                 showInstance['myReviewTime'] = show.time;
                 this.ratedTvShowsDetails.push(showInstance);
-                if (this.ratedTvShowsDetails.length >= 1) {
-                }
               });
           });
         },
