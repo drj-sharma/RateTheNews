@@ -16,6 +16,7 @@ export class ReviewCompComponent implements OnInit {
   reviews: any[] = [];
   @Input() id: string;
   @Input() myReviewId: string;
+  @Input() myRatingObj: any[];
   users: any[] = [];
 
   constructor(
@@ -35,7 +36,8 @@ export class ReviewCompComponent implements OnInit {
       const dialogRef = this.dialog.open(WriteReviewComponent, {
         data: {
           dataKey: this.id,
-          myReviewId: this.myReviewId
+          myReviewId: this.myReviewId,
+          myRatingObj: this.myRatingObj
         },
       });
 
