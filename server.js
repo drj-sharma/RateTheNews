@@ -207,10 +207,10 @@ app.get("/getArticleHeadings", (req, res) => {
  * @return (show rating of showId of the requested user uid)
  **/
 app.get("/getMyRating", (req, res) => {
-  id = '';
+  id = "";
   data = [];
   const query = req.query.query;
-  const i = query.indexOf('-');
+  const i = query.indexOf("-");
   const showId = query.substring(0, i);
   const uid = query.substring(i + 1);
   db.collection("show-ratings")
@@ -221,11 +221,41 @@ app.get("/getMyRating", (req, res) => {
       snapShot.forEach((doc) => {
         data.push(doc.data());
         id = doc.id;
-      })
+      });
     })
     .then(() => data.push(id))
     .then(() => res.send(data))
     .catch((e) => console.error(e));
 });
 
-app.listen(3000, () => console.log("Node.js server is running on port 3000"));
+app.get("/getRatedTvShowsByUid", (req, res) => {
+  const data = [];
+  const uid = req.query.id;
+  db.collection("show-ratings")
+    .where("user", "==", uid)
+    .get()
+    .then((snapShot) => {
+      snapShot.forEach((doc) => {
+        data.push(doc.data());
+      });
+    })
+    .then(() => res.send(data))
+    .catch((e) => console.log(e));
+});
+
+app.get("/getShowById", (req, res) => {
+  const id = req.query.id;
+  db.collection("news-shows")
+    .doc(id)
+    .get()
+    .then((doc) => {
+      const data = doc.data();
+      data["showID"] = doc.id;
+      res.send(data);
+    })
+    .catch((e) => console.error(e));
+});
+
+const PORT = process.env.port || 3000;
+
+app.listen(PORT, () => console.log("Node.js server is running on port 3000"));

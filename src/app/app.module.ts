@@ -29,6 +29,7 @@ import { YourArticlesComponent } from './your-articles/your-articles.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { CommentsComponent } from './comments/comments.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { YourRatingsComponent } from './your-ratings/your-ratings.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     YourArticlesComponent,
     RegisterUserComponent,
     CommentsComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    YourRatingsComponent
   ],
   imports: [
     BrowserModule,

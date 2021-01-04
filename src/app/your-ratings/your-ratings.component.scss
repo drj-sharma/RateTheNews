@@ -1,0 +1,38 @@
+.container {
+  margin-left: 8vw;
+  margin-right: 5vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+.card {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 20px;
+  border-right: 1px solidblack;
+  margin-right: 10px;
+  padding-right: 10px;
+  transition: 1s ease-in-out;
+  img {
+    width: 140px;
+    height: 180px;
+    border-radius: 10px;
+  }
+  &:hover {
+    background: rgb(206, 202, 202);
+    border-radius: 10px;
+  }
+}
+.show-details {
+  display: flex;
+  flex-direction: column;
+  .description {
+    font-size: 10px;
+  }
+  .your-rating {
+    color: blueviolet;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

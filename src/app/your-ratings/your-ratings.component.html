@@ -1,0 +1,26 @@
+<div class="container">
+  <div *ngFor="let show of ratedTvShowsDetails" (click)="goToShow(show.showID)">
+    <div class="card">
+      <div class="show-image">
+        <img [src]="show.poster" alt="poster" />
+      </div>
+      <div class="show-details">
+        <div class="your-rating">
+          ⭐ Your Rating:
+          {{ show.myReviewRating }} / 10
+        </div>
+        <div class="title">
+          <h3>{{ show.title }}</h3>
+        </div>
+        <div class="description">
+          {{ show.description }}
+        </div>
+        <div class="avg">
+          <h3>
+            Avg rating: <strong> {{ show.avgrating }}</strong> / 10
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
