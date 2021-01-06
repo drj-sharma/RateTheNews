@@ -23,7 +23,7 @@ export class WriteReviewComponent implements OnInit {
     user: '',
     rating: 0,
     helpful: 0,
-    nothelpful: 0,
+    totalvotes: 0,
     time: this.date,
     showid: '',
   };

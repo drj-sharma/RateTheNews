@@ -63,6 +63,16 @@
     </div>
   </mat-tab>
   <mat-tab label="Articles">
+    <div id='sort'>
+      <h3>Sort by</h3>
+      <mat-form-field appearance="fill">
+        <select matNativeControl (change)="onChange($event.target.value)">
+          <option value="votes">votes</option>
+          <option value="newest">Newest</option>
+        </select>
+      </mat-form-field>
+    </div>
+
     <div class="articles" *ngFor="let article of articles">
       <div class="articleTile" (click)="viewArticle(article.docId)">
         <p class="title">
