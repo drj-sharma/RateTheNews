@@ -61,11 +61,6 @@ app.put("/fetchreviews", (req, res) => {
           content: doc.data().content,
           user: doc.data().user,
           rating: doc.data().rating,
-          helpful: doc.data().helpful,
-          totalvotes: doc.data().totalvotes,
-          reviewid: doc.id,
-          uservote: null,
-          voteid: null
         });
         console.log(data);
       });
@@ -105,29 +100,6 @@ app.get("/fetchshows", (req, res) => {
 app.get("/fetchArticles", (req, res) => {
   let data = [];
   db.collection("articles")
-    .orderBy('votes', "desc")
-    .orderBy('time','desc')
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        console.log("Doc Id:", doc.id);
-        data.push({
-          docId: doc.id,
-          title: doc.data().title,
-          time: doc.data().time,
-          uid: doc.data().uid,
-        });
-        console.log(data);
-      });
-      res.send(data);
-    })
-    .catch((e) => console.error("Errow While Fetching Articles", e));
-});
-
-app.get("/fetchArticlesbynew", (req, res) => {
-  let data = [];
-  db.collection("articles")
-    .orderBy('time','desc')
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {

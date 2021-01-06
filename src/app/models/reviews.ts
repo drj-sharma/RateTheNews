@@ -5,7 +5,7 @@ export interface reviews {
     user?: string;
     rating?: number;
     helpful?: number;
-    totalvotes?: number;
+    nothelpful?: number;
     time?: Date;
     showid?: string;
 }

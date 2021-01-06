@@ -16,15 +16,8 @@
         </div>
         <div id="helpful">
             <h4>Was this helpful?</h4>
-            <button mat-button [ngClass]="{
-                style1: review.uservote == true,
-                style2: review.uservote != true
-              }" (click)=" !wait && helpful(review.reviewid,review.uservote,review.voteid)">Yes</button>
-            <button mat-button [ngClass]="{
-                style1: review.uservote == false,
-                style2: review.uservote != false
-              }" (click)=" !wait && nothelpful(review.reviewid,review.uservote,review.voteid)">No</button>
+            <button mat-button>Yes</button>
+            <button mat-button>No</button>
         </div>
-        <h4>{{ review.helpful}} out of {{review.totalvotes }} people found this helpful </h4>
     </div>
 </div>

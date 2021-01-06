@@ -356,7 +356,6 @@ export class CommentsComponent implements OnInit {
         console.log('The dialog was closed');
       });
       this.openSnackBar('Login to vote', 'OKAY');
-      this.wait = false;
     } else {
       if (voteid != null) {
         console.log('yes');
@@ -482,7 +481,6 @@ export class CommentsComponent implements OnInit {
         console.log('The dialog was closed');
       });
       this.openSnackBar('Login to vote', 'OKAY');
-      this.wait = false;
     } else {
       if (voteid != null) {
         this.db

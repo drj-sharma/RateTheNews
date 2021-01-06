@@ -49,27 +49,7 @@ export class MainComponent implements OnInit {
         });
       });
   }
-
-  async getArticlesbynew() {
-    this.http.get('http://localhost:3000/fetchArticlesbynew', { responseType: 'json', })
-    .subscribe((res: any[]) => {
-      console.log(res);
-      this.articles = res;
-      this.showSpinner = false;
-    });
-  }
   viewArticle(articleId: string) {
-    this.router.navigate(['published',  { id: articleId }]);
-  }
-
-  onChange(value){
-    if (value == 'newest'){
-      this.articles = [];
-      this.getArticlesbynew()
-    }
-    else if(value == 'votes'){
-      this.articles = [];
-      this.getArticles()
-    }
+    this.router.navigate(['published', articleId]);
   }
 }
