@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'article', component: ArticleComponent },
   { path: 'tv-rating/:id', component: TvRatingComponent },
   { path: 'your-articles', component: YourArticlesComponent },
-  { path: 'published', component: PublishedArticlesComponent },
+  { path: 'published/:id', component: PublishedArticlesComponent },
   { path: 'edit-profile', component: EditProfileComponent },
   { path: 'your-rating/:id', component: YourRatingsComponent },
 ];
