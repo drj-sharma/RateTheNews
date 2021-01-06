@@ -63,6 +63,20 @@
     </div>
   </mat-tab>
   <mat-tab label="Articles">
+<<<<<<< HEAD
+    <div id='sort'>
+      <h3>Sort by</h3>
+      <mat-form-field appearance="fill">
+        <select matNativeControl (change)="onChange($event.target.value)">
+          <option value="votes">votes</option>
+          <option value="newest">Newest</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <div class="articles" *ngFor="let article of articles">
+      <div class="articleTile" (click)="viewArticle(article.docId)">
+=======
     <div
       class="articles"
       *ngFor="let article of articles"
@@ -76,6 +90,7 @@
           <mat-icon *ngIf="!article.photoURL">account_circle</mat-icon>
           <span >{{ article.displayName }}</span>
         </div>
+>>>>>>> d7138c8899719ff19c0d70fa8cd21def9f1b1192
         <p class="title">
           <i> {{ article.title }} </i>
         </p>
