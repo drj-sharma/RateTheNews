@@ -1,14 +1,27 @@
-<div id="container">
+<div *ngIf="!loadingOff" class="container">
+  <mat-divider style="margin: 10px;"></mat-divider>
   <h2>Comments</h2>
-  <div id="post-comment">
-    <mat-form-field>
-      <mat-label>Leave a comment</mat-label>
-      <textarea matInput [(ngModel)]="commentbox"></textarea>
-    </mat-form-field>
-    <button mat-mini-fab color="warn" (click)="postComment()">
-      <mat-icon>arrow_right_alt</mat-icon>
+  <br />
+  <div class="post-comment">
+    <textarea
+      class="main-textarea"
+      placeholder="Leave a comment"
+      [(ngModel)]="commentbox"
+    ></textarea>
+    <button class="button-theme" mat-flat-button (click)="postComment()">
+      Post
     </button>
   </div>
+  <div id='sort'>
+    <h3>Sort by</h3>
+    <mat-form-field appearance="fill">
+      <select matNativeControl (change)="onChange($event.target.value)">
+        <option value="votes">votes</option>
+        <option value="newest">Newest</option>
+      </select>
+    </mat-form-field>
+  </div>
+  
   <div id="all-comments" *ngFor="let comment of comments">
     <img
       src="{{ comment.userphoto }}"
@@ -18,45 +31,76 @@
     <h4 id="user">{{ comment.user }}</h4>
     <h4 id="time">1 hour ago</h4>
     <p id="comment">{{ comment.comment }}</p>
-    <div id="bottom">
-      <button id="upButton" [ngClass]="{'style1':comment.uservote == 1,'style3':comment.uservote !=1}" (click)="!wait && upvote(comment.commentid,comment.voteid,comment.uservote)" class="vote">
-            <svg  class="upArrow" viewBox="0 0 11.5 6.4" xml:space="preserve">
-            <path  d="M11.4,5.4L6,0C5.9-0.1,5.8-0.1,5.8-0.1c-0.1,0-0.2,0-0.2,0.1
+    <div class="comment__toolbar">
+      <button
+        id="upButton"
+        [ngClass]="{
+          style1: comment.uservote == 1,
+          style3: comment.uservote != 1
+        }"
+        (click)="
+          !wait && upvote(comment.commentid, comment.voteid, comment.uservote)
+        "
+        class="vote"
+      >
+        <svg class="upArrow" viewBox="0 0 11.5 6.4" xml:space="preserve">
+          <path
+            d="M11.4,5.4L6,0C5.9-0.1,5.8-0.1,5.8-0.1c-0.1,0-0.2,0-0.2,0.1
               L0.1,5.4C0,5.6,0,5.7,0.1,5.9l0.4,0.4c0.1,0.1,0.3,0.1,0.4,0l4.8-4.8l4.8,4.8c0.1,0.1,0.3,0.1,0.4,0l0.4-0.4
-              C11.5,5.7,11.5,5.6,11.4,5.4z"/>
-            </svg>
-      </button>
-      <h4>{{comment.votes}}</h4>
-      <button  id="downButton" [ngClass]="{'style2': comment.uservote == -1,'style3':comment.uservote != -1}" (click)="!wait && downvote(comment.commentid,comment.voteid,comment.uservote)" class="vote">
-    
-        <svg  class="downArrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 11.5 6.4" xml:space="preserve">
-          <path  d="M0.1,0.9l5.4,5.4c0.1,0.1,0.1,0.1,0.2,0.1c0.1,0,0.2,0,0.2-0.1
-        l5.4-5.4c0.1-0.1,0.1-0.3,0-0.4L11,0c-0.1-0.1-0.3-0.1-0.4,0L5.8,4.8L0.9,0C0.8-0.1,0.6-0.1,0.5,0L0.1,0.4C0,0.6,0,0.7,0.1,0.9z"/>
+              C11.5,5.7,11.5,5.6,11.4,5.4z"
+          />
         </svg>
-        </button>
+      </button>
+      <h4>{{ comment.votes }}</h4>
+      <button
+        id="downButton"
+        [ngClass]="{
+          style2: comment.uservote == -1,
+          style3: comment.uservote != -1
+        }"
+        (click)="
+          !wait && downvote(comment.commentid, comment.voteid, comment.uservote)
+        "
+        class="vote"
+      >
+        <svg
+          class="downArrow"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 11.5 6.4"
+          xml:space="preserve"
+        >
+          <path
+            d="M0.1,0.9l5.4,5.4c0.1,0.1,0.1,0.1,0.2,0.1c0.1,0,0.2,0,0.2-0.1
+        l5.4-5.4c0.1-0.1,0.1-0.3,0-0.4L11,0c-0.1-0.1-0.3-0.1-0.4,0L5.8,4.8L0.9,0C0.8-0.1,0.6-0.1,0.5,0L0.1,0.4C0,0.6,0,0.7,0.1,0.9z"
+          />
+        </svg>
+      </button>
+      <div
+        id="loadreplies"
+        *ngIf="comment.loadrepliesvar"
+        (click)="loadreplies(comment)"
+      >
+      💬 Show replies
+      </div>
       <img
         src="../../assets/images/reply.png"
-        height="28"
-        width="28"
+        height="24"
+        width="24"
         (click)="toggle(comment)"
       />
     </div>
-    <div id="reply-box" *ngIf="comment.show">
-      <mat-form-field>
-        <mat-label>Leave a reply</mat-label>
-        <textarea matInput [(ngModel)]="replybox"></textarea>
-      </mat-form-field>
-      <button mat-flat-button color="warn" (click)="postReply(comment)">
-        post-reply
+    <div id="reply-box" class="post-reply" *ngIf="comment.show">
+      <textarea
+        placeholder="Reply.."
+        class="reply-textarea"
+        [(ngModel)]="replybox"
+      ></textarea>
+      <button class="button-theme" mat-flat-button (click)="postReply(comment)">
+        Reply
       </button>
     </div>
-    <h4
-      id="loadreplies"
-      *ngIf="comment.loadrepliesvar"
-      (click)="loadreplies(comment)"
-    >
-      Load replies
-    </h4>
+
     <div id="all-reply" *ngFor="let reply of comment.replies">
       <img
         src="{{ reply.userphoto }}"
@@ -67,22 +111,63 @@
       <h4 id="time">1 hour ago</h4>
       <p id="comment">{{ reply.reply }}</p>
       <div id="bottom">
-        <button id="upButton" [ngClass]="{'style1':reply.uservote == 1,'style3':reply.uservote !=1}" (click)="!wait && upvotereply(comment.commentid,reply.replyid,reply.voteid,reply.uservote)" class="vote">
-          <svg  class="upArrow" viewBox="0 0 11.5 6.4" xml:space="preserve">
-          <path  d="M11.4,5.4L6,0C5.9-0.1,5.8-0.1,5.8-0.1c-0.1,0-0.2,0-0.2,0.1
+        <button
+          id="upButton"
+          [ngClass]="{
+            style1: reply.uservote == 1,
+            style3: reply.uservote != 1
+          }"
+          (click)="
+            !wait &&
+              upvotereply(
+                comment.commentid,
+                reply.replyid,
+                reply.voteid,
+                reply.uservote
+              )
+          "
+          class="vote"
+        >
+          <svg class="upArrow" viewBox="0 0 11.5 6.4" xml:space="preserve">
+            <path
+              d="M11.4,5.4L6,0C5.9-0.1,5.8-0.1,5.8-0.1c-0.1,0-0.2,0-0.2,0.1
             L0.1,5.4C0,5.6,0,5.7,0.1,5.9l0.4,0.4c0.1,0.1,0.3,0.1,0.4,0l4.8-4.8l4.8,4.8c0.1,0.1,0.3,0.1,0.4,0l0.4-0.4
-            C11.5,5.7,11.5,5.6,11.4,5.4z"/>
+            C11.5,5.7,11.5,5.6,11.4,5.4z"
+            />
           </svg>
-    </button>
-    <h4>{{reply.votes}}</h4>
-    <button  id="downButton" [ngClass]="{'style2': reply.uservote == -1,'style3':reply.uservote != -1}" (click)="!wait && downvotereply(comment.commentid,reply.replyid,reply.voteid,reply.uservote)" class="vote">
-  
-      <svg  class="downArrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 11.5 6.4" xml:space="preserve">
-        <path  d="M0.1,0.9l5.4,5.4c0.1,0.1,0.1,0.1,0.2,0.1c0.1,0,0.2,0,0.2-0.1
-      l5.4-5.4c0.1-0.1,0.1-0.3,0-0.4L11,0c-0.1-0.1-0.3-0.1-0.4,0L5.8,4.8L0.9,0C0.8-0.1,0.6-0.1,0.5,0L0.1,0.4C0,0.6,0,0.7,0.1,0.9z"/>
-      </svg>
-      </button>
-        <img src="../../assets/images/reply.png" height="28" width="28" />
+        </button>
+        <h4>{{ reply.votes }}</h4>
+        <button
+          id="downButton"
+          [ngClass]="{
+            style2: reply.uservote == -1,
+            style3: reply.uservote != -1
+          }"
+          (click)="
+            !wait &&
+              downvotereply(
+                comment.commentid,
+                reply.replyid,
+                reply.voteid,
+                reply.uservote
+              )
+          "
+          class="vote"
+        >
+          <svg
+            class="downArrow"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 11.5 6.4"
+            xml:space="preserve"
+          >
+            <path
+              d="M0.1,0.9l5.4,5.4c0.1,0.1,0.1,0.1,0.2,0.1c0.1,0,0.2,0,0.2-0.1
+      l5.4-5.4c0.1-0.1,0.1-0.3,0-0.4L11,0c-0.1-0.1-0.3-0.1-0.4,0L5.8,4.8L0.9,0C0.8-0.1,0.6-0.1,0.5,0L0.1,0.4C0,0.6,0,0.7,0.1,0.9z"
+            />
+          </svg>
+        </button>
+        <img src="../../assets/images/reply.png" height="20" width="20" />
       </div>
     </div>
     <h4
@@ -93,7 +178,12 @@
       Load More
     </h4>
   </div>
-  <button mat-flat-button color="warn" (click)="getmoreComments()">
+  <button
+    style="width: min-content"
+    mat-flat-button
+    color="warn"
+    (click)="getmoreComments()"
+  >
     Load more
   </button>
 </div>

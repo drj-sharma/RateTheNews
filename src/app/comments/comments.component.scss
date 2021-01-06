@@ -1,10 +1,9 @@
-#container {
-  margin-left: 5vw;
-  margin-right: 5vw;
+.container {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  margin-left: 13vw;
   margin-top: 10px;
-}
-#post-comment button {
-  margin-left: 10px;
 }
 #all-comments h4 {
   display: inline-block;
@@ -15,6 +14,18 @@
 }
 #comment {
   margin-left: 20px;
+}
+.post-comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+.post-reply {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
 }
 #time {
   color: #909497;
@@ -45,12 +56,12 @@ h1 {
   height: 21.5px;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
-  
+
   &:active {
     outline: none;
     border: none;
   }
-  
+
   &:focus {
     outline: 0;
   }
@@ -66,7 +77,28 @@ h1 {
     margin: 0;
   }
 }
-
+.main-textarea {
+  font-family: inherit;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 70vw;
+  height: 60px;
+  resize: none;
+}
+.reply-textarea {
+  font-family: inherit;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 20vw;
+  height: 60px;
+  resize: none;
+}
+.comment__toolbar {
+  display: flex;
+  gap: 10px;
+}
 .downArrow {
   x: 0px;
   y: 0px;
@@ -74,25 +106,30 @@ h1 {
   path {
     fill-rule: evenodd;
     clip-rule: evenodd;
-    
   }
 }
 
 #upButton :hover {
-  fill: #6CC576;
+  fill: #6cc576;
   cursor: pointer;
 }
 
 #downButton :hover {
-  fill: #FF586C;
+  fill: #ff586c;
   cursor: pointer;
 }
-.style1{
-  fill: #6CC576;
+.style1 {
+  fill: #6cc576;
 }
-.style2{
-  fill: #FF586C;
+.style2 {
+  fill: #ff586c;
 }
-.style3{
-  fill: #BBBBBB;
+.style3 {
+  fill: #bbbbbb;
+}
+#sort h3{
+  display: inline-block;
+}
+#sort mat-form-field{
+  display: inline-block;
 }

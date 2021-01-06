@@ -41,6 +41,7 @@ export class ArticleComponent implements OnInit {
     uid: '',
     time: '',
     articleJSON: [],
+    votes: 0
   };
   ngOnInit(): void {
     this.editor = new EditorJS({
@@ -104,6 +105,7 @@ export class ArticleComponent implements OnInit {
       this.outputArray.title = this.title;
       this.outputArray.uid = this.uid;
       this.outputArray.time = Date.now().toString();
+      this.outputArray.votes = 0;
       this.outputArray.articleJSON = output.blocks;
       // adding to the collection
       this.articlesCollections

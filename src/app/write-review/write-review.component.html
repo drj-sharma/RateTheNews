@@ -1,5 +1,5 @@
 <div id="stars">
-    <h2>Your Rating</h2>
+    <h2>Your Rating: <span style="color: gray;">{{strating}} / 10</span></h2>
     <fieldset class="rating" >
         <input type="radio" id="star10" name="rating" value="10" [(ngModel)]="strating"/><label class = "full" for="star10"></label>
         <input type="radio" id="star9half" name="rating" value="9.5" [(ngModel)]="strating"/><label class="half" for="star9half"></label>
@@ -22,7 +22,6 @@
         <input type="radio" id="star1" name="rating" value="1" [(ngModel)]="strating"/><label class = "full" for="star1"></label>
         <input type="radio" id="starhalf" name="rating" value=".5" [(ngModel)]="strating"/><label class="half" for="starhalf"></label>
     </fieldset>
-    {{strating}}
 </div>
 <div id="content">
     <mat-form-field class="example-full-width">

@@ -13,15 +13,22 @@
   </div>
   <ul class="menu">
     <li>
-      <h4>Browse</h4>
+      <button mat-flat-button [matMenuTriggerFor]="categories">Browse</button>
+      <mat-menu #categories>
+        <button mat-menu-item>News shows</button>
+        <button mat-menu-item>News Anchor</button>
+        <button mat-menu-item>News Anchor</button>
+        <button mat-menu-item>Top weekly shows</button>
+        <button mat-menu-item>Top weekly anchors</button>
+        <button mat-menu-item>Top weekly articles</button>
+      </mat-menu>
     </li>
     <li>
-      <h4>Contact Us</h4>
+      <button mat-flat-button>Contact Us</button>
     </li>
     <li>
-      <a [routerLink]="['/article']" routerLinkActive="router-link-active"
-        >Write an Article</a
-      >
+      <button class="write-story" mat-flat-button><a [routerLink]="['/article']" routerLinkActive="router-link-active"
+        >Write an Article</a></button>
     </li>
   </ul>
   <div id="login">
@@ -43,7 +50,7 @@
         Register
       </button>
     </div>
-    <div *ngIf="auth.user$ | async as user;">
+    <div *ngIf="auth.user$ | async as user">
       <!-- <button class="button" (click)="auth.signOut()">Sign Out</button> -->
       <div class="user-dropdown">
         <div id="user-profile">
@@ -66,9 +73,9 @@
             <mat-icon>list</mat-icon>
             <span>Your Articles</span>
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="goToYourRatings()">
             <mat-icon>star_outline</mat-icon>
-            <span>Your ratings</span>
+            <span>Your Ratings</span>
           </button>
           <button mat-menu-item (click)="goToProfileSetting()">
             <mat-icon>account_circle</mat-icon>

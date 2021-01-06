@@ -8,7 +8,7 @@ import { MainComponent } from './main/main.component';
 import { PublishedArticlesComponent } from './published-articles/published-articles.component';
 import { TvRatingComponent } from './tv-rating/tv-rating.component';
 import { YourArticlesComponent } from './your-articles/your-articles.component';
-
+import { YourRatingsComponent } from './your-ratings/your-ratings.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
@@ -19,11 +19,12 @@ const routes: Routes = [
   { path: 'tv-rating/:id', component: TvRatingComponent },
   { path: 'your-articles', component: YourArticlesComponent },
   { path: 'published', component: PublishedArticlesComponent },
-  { path: 'edit-profile', component: EditProfileComponent }
+  { path: 'edit-profile', component: EditProfileComponent },
+  { path: 'your-rating/:id', component: YourRatingsComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

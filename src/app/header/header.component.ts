@@ -8,14 +8,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public dialog: MatDialog, public auth: AuthService, private router: Router) { }
+  constructor(
+    public dialog: MatDialog,
+    public auth: AuthService,
+    private router: Router
+  ) {}
   vis = true;
+  user: any[];
   ngOnInit(): void {
-    const user = localStorage.getItem('user');
-    if (user) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if (this.user) {
       this.vis = false;
     }
   }
@@ -23,14 +28,14 @@ export class HeaderComponent implements OnInit {
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
   }
   openRegisterDialog(): void {
     const dialogRef2 = this.dialog.open(RegisterComponent);
 
-    dialogRef2.afterClosed().subscribe(result => {
+    dialogRef2.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
   }
@@ -39,5 +44,8 @@ export class HeaderComponent implements OnInit {
   }
   goToProfileSetting() {
     this.router.navigate(['edit-profile']);
+  }
+  goToYourRatings() {
+    this.router.navigate(['your-rating', this.user['uid']]);
   }
 }
