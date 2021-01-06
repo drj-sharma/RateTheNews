@@ -32,19 +32,18 @@ export class PublishedArticlesComponent implements OnInit {
   increment = firebase.firestore.FieldValue.increment(1);
   decrement = firebase.firestore.FieldValue.increment(-1);
   increment2 = firebase.firestore.FieldValue.increment(2);
-  decrement2= firebase.firestore.FieldValue.increment(-2);
+  decrement2 = firebase.firestore.FieldValue.increment(-2);
   wait = false;
   curruser: string;
   uservote = 0;
-  voteid:string = null;
-
+  voteid: string = null;
 
   constructor(
     private afs: AngularFirestore,
     private route: ActivatedRoute,
     private http: HttpClient,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -68,13 +67,16 @@ export class PublishedArticlesComponent implements OnInit {
       .then((doc) => {
         this.article = doc.data();
       });
-    await articleRef.collection('votes', (ref) => ref.where('uid','==',this.curruser))
-    .get().toPromise().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        this.uservote = doc.data().vote;
-        this.voteid = doc.id;
-      })
-    })
+    await articleRef
+      .collection('votes', (ref) => ref.where('uid', '==', this.curruser))
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.uservote = doc.data().vote;
+          this.voteid = doc.id;
+        });
+      });
 
     this.uid = this.article.uid;
     this.getUserByUID(this.uid);
@@ -105,7 +107,7 @@ export class PublishedArticlesComponent implements OnInit {
       inline: 'nearest',
     });
   }
-  fetchcurruserid(){
+  fetchcurruserid() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
@@ -122,180 +124,240 @@ export class PublishedArticlesComponent implements OnInit {
     });
   }
 
-  upvote(){
+  upvote() {
     var vote = this.uservote == 1 ? 0 : 1;
     var parent = this;
     this.wait = true;
     var curruser = this.curruser;
-    if(curruser == null){
+    if (curruser == null) {
       const dialogRef2 = this.dialog.open(LoginComponent);
 
       dialogRef2.afterClosed().subscribe((result) => {
         console.log('The dialog was closed');
       });
       this.openSnackBar('Login to vote', 'OKAY');
+    } else {
+      if (this.voteid != null) {
+        console.log('yes');
+        this.afs
+          .collection('articles')
+          .doc(this.articleID)
+          .collection('votes')
+          .doc(this.voteid)
+          .update({
+            vote: vote,
+          })
+          .then(function (docRef) {
+            console.log(parent.wait);
+            if (parent.uservote == 0) {
+              console.log(parent.wait);
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.increment,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes + 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == 1) {
+              console.log(parent.wait);
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.decrement,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes - 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == -1) {
+              console.log(parent.wait);
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.increment2,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes + 2;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            }
+          });
+      } else {
+        this.afs
+          .collection('articles')
+          .doc(this.articleID)
+          .collection('votes')
+          .add({
+            uid: curruser,
+            vote: vote,
+          })
+          .then(function (docRef) {
+            parent.voteid = docRef.id;
+            if (parent.uservote == 0) {
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.increment,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes + 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == 1) {
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.decrement,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes - 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == -1) {
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.increment2,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes + 2;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            }
+          });
+      }
     }
-    else{
-    if (this.voteid != null){
-      console.log('yes')
-      this.afs.collection('articles').doc(this.articleID).collection('votes').doc(this.voteid).update({
-        vote: vote
-      }).then(function(docRef) {
-        console.log(parent.wait);
-        if (parent.uservote == 0){
-          console.log(parent.wait);
-          parent.afs.collection('articles').doc(parent.articleID).update({
-            votes: parent.increment 
-          }).then(function(docRef) {
-          parent.votes =parent.votes+ 1
-          parent.wait = false;
-          parent.uservote = vote;
-          })
-        }
-        else if(parent.uservote == 1){
-          console.log(parent.wait);
-          parent.afs.collection('articles').doc(parent.articleID).update({
-            votes: parent.decrement 
-          }).then(function(docRef) {
-          parent.votes =parent.votes- 1
-          parent.wait = false;
-          parent.uservote = vote;
-          })
-        }
-        else if(parent.uservote == -1){
-          console.log(parent.wait);
-          parent.afs.collection('articles').doc(parent.articleID).update({
-            votes: parent.increment2 
-          }).then(function(docRef) {
-          parent.votes =parent.votes+ 2
-          parent.wait = false;
-          parent.uservote = vote;
-          })
-        }
-      })
-    }else{
-      this.afs.collection('articles').doc(this.articleID).collection('votes').add({
-        uid: curruser,
-        vote: vote
-      }).then(function(docRef) {
-        parent.voteid = docRef.id
-        if (parent.uservote == 0){
-          parent.afs.collection('articles').doc(parent.articleID).update({
-            votes: parent.increment 
-          }).then(function(docRef) {
-          parent.votes = parent.votes +1
-          parent.wait = false;
-          parent.uservote = vote;
-          })
-        }
-        else if(parent.uservote == 1){
-          parent.afs.collection('articles').doc(parent.articleID).update({
-            votes: parent.decrement 
-          }).then(function(docRef) {
-          parent.votes = parent.votes -1
-          parent.wait = false;
-          parent.uservote = vote;
-          })
-        }
-        else if(parent.uservote == -1){
-          parent.afs.collection('articles').doc(parent.articleID).update({
-            votes: parent.increment2
-          }).then(function(docRef) {
-          parent.votes = parent.votes +2
-          parent.wait = false;
-          parent.uservote = vote;
-          })
-        }
-      })
-  }}
-}
-  downvote(){
+  }
+  downvote() {
     var vote = this.uservote == -1 ? 0 : -1;
     var parent = this;
-    this.wait = true
-     var curruser = this.curruser;
-      if(curruser == null){
-        const dialogRef2 = this.dialog.open(LoginComponent);
+    this.wait = true;
+    var curruser = this.curruser;
+    if (curruser == null) {
+      const dialogRef2 = this.dialog.open(LoginComponent);
 
-        dialogRef2.afterClosed().subscribe((result) => {
-          console.log('The dialog was closed');
-        });
-        this.openSnackBar('Login to vote', 'OKAY');
-      }
-      else{
-        if (this.voteid != null){
-          console.log('yes')
-          this.afs.collection('articles').doc(this.articleID).collection('votes').doc(this.voteid).update({
-            vote: vote
-          }).then(function(docRef) {
+      dialogRef2.afterClosed().subscribe((result) => {
+        console.log('The dialog was closed');
+      });
+      this.openSnackBar('Login to vote', 'OKAY');
+    } else {
+      if (this.voteid != null) {
+        console.log('yes');
+        this.afs
+          .collection('articles')
+          .doc(this.articleID)
+          .collection('votes')
+          .doc(this.voteid)
+          .update({
+            vote: vote,
+          })
+          .then(function (docRef) {
             console.log(parent.wait);
-            if (parent.uservote == 0){
+            if (parent.uservote == 0) {
               console.log(parent.wait);
-              parent.afs.collection('articles').doc(parent.articleID).update({
-                votes: parent.decrement 
-              }).then(function(docRef) {
-              parent.votes =parent.votes - 1
-              parent.wait = false;
-              parent.uservote = vote;
-              })
-            }
-            else if(parent.uservote == 1){
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.decrement,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes - 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == 1) {
               console.log(parent.wait);
-              parent.afs.collection('articles').doc(parent.articleID).update({
-                votes: parent.decrement2
-              }).then(function(docRef) {
-              parent.votes =parent.votes- 2
-              parent.wait = false;
-              parent.uservote = vote;
-              })
-            }
-            else if(parent.uservote == -1){
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.decrement2,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes - 2;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == -1) {
               console.log(parent.wait);
-              parent.afs.collection('articles').doc(parent.articleID).update({
-                votes: parent.increment
-              }).then(function(docRef) {
-              parent.votes =parent.votes+ 1
-              parent.wait = false;
-              parent.uservote = vote;
-              })
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.increment,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes + 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
             }
-          })
-        }else{
-          this.afs.collection('articles').doc(this.articleID).collection('votes').add({
+          });
+      } else {
+        this.afs
+          .collection('articles')
+          .doc(this.articleID)
+          .collection('votes')
+          .add({
             uid: curruser,
-            vote: vote
-          }).then(function(docRef) {
-            parent.voteid = docRef.id
-            if (parent.uservote == 0){
-              parent.afs.collection('articles').doc(parent.articleID).update({
-                votes: parent.decrement 
-              }).then(function(docRef) {
-              parent.votes = parent.votes -1
-              parent.wait = false;
-              parent.uservote = vote;
-              })
-            }
-            else if(parent.uservote == 1){
-              parent.afs.collection('articles').doc(parent.articleID).update({
-                votes: parent.decrement2 
-              }).then(function(docRef) {
-              parent.votes = parent.votes -2
-              parent.wait = false;
-              parent.uservote = vote;
-              })
-            }
-            else if(parent.uservote == -1){
-              parent.afs.collection('articles').doc(parent.articleID).update({
-                votes: parent.increment
-              }).then(function(docRef) {
-              parent.votes = parent.votes +1
-              parent.wait = false;
-              parent.uservote = vote;
-              })
-            }
+            vote: vote,
           })
-      }}
+          .then(function (docRef) {
+            parent.voteid = docRef.id;
+            if (parent.uservote == 0) {
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.decrement,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes - 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == 1) {
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.decrement2,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes - 2;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            } else if (parent.uservote == -1) {
+              parent.afs
+                .collection('articles')
+                .doc(parent.articleID)
+                .update({
+                  votes: parent.increment,
+                })
+                .then(function (docRef) {
+                  parent.votes = parent.votes + 1;
+                  parent.wait = false;
+                  parent.uservote = vote;
+                });
+            }
+          });
+      }
+    }
   }
-
-
 }

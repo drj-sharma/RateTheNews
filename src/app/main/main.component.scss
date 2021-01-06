@@ -201,7 +201,10 @@ h4 {
 .articleTile {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   cursor: pointer;
   .title {
     color: rgb(36, 33, 33);
@@ -212,6 +215,21 @@ h4 {
     font-size: 12px;
     color: rgb(112, 109, 109);
   }
+  img {
+    width: 30px;
+    border-radius: 50%;
+  }
+}
+.author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 8%;
 }
 #sort h3{
   display: inline-block;

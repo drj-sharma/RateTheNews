@@ -63,6 +63,7 @@
     </div>
   </mat-tab>
   <mat-tab label="Articles">
+<<<<<<< HEAD
     <div id='sort'>
       <h3>Sort by</h3>
       <mat-form-field appearance="fill">
@@ -75,11 +76,33 @@
 
     <div class="articles" *ngFor="let article of articles">
       <div class="articleTile" (click)="viewArticle(article.docId)">
+=======
+    <div
+      class="articles"
+      *ngFor="let article of articles"
+      (click)="viewArticle(article.docId)"
+    >
+      <div class="articleTile">
+        <div class="author">
+          <span *ngIf="article.photoURL"
+            ><img [src]="article.photoURL" alt=""
+          /></span>
+          <mat-icon *ngIf="!article.photoURL">account_circle</mat-icon>
+          <span >{{ article.displayName }}</span>
+        </div>
+>>>>>>> d7138c8899719ff19c0d70fa8cd21def9f1b1192
         <p class="title">
           <i> {{ article.title }} </i>
         </p>
-        <p class="time">&nbsp; {{ article.time | date: "short" }}</p>
+        <br />
+        <p class="time">&nbsp; {{ article.time | date: "mediumDate" }}</p>
       </div>
+      <div class="bottom">
+        <span>{{ article.votes }}</span>
+        <mat-icon color="warm">favorite</mat-icon>
+      </div>
+      <span style="padding: 2px"></span>
+      <mat-divider></mat-divider>
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -136,6 +136,7 @@ app.get("/fetchArticlesbynew", (req, res) => {
           docId: doc.id,
           title: doc.data().title,
           time: doc.data().time,
+          votes: doc.data().votes,
           uid: doc.data().uid,
         });
         console.log(data);

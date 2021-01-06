@@ -31,12 +31,23 @@ export class MainComponent implements OnInit {
       });
   }
   async getArticles() {
-    this.http.get('http://localhost:3000/fetchArticles', { responseType: 'json', })
-    .subscribe((res: any[]) => {
-      console.log(res);
-      this.articles = res;
-      this.showSpinner = false;
-    });
+    this.http
+      .get('http://localhost:3000/fetchArticles', { responseType: 'json' })
+      .subscribe((res: any[]) => {
+        this.showSpinner = false;
+        res.forEach((article) => {
+          this.http
+            .get('http://localhost:3000/getUserByUid?uid=' + article.uid, {
+              responseType: 'json',
+            })
+            .subscribe((user: any[]) => {
+              article['photoURL'] = user['photoURL'];
+              article['displayName'] = user['displayName'];
+              this.articles.push(article);
+              console.log(this.articles);
+            });
+        });
+      });
   }
 
   async getArticlesbynew() {

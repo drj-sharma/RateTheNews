@@ -71,7 +71,7 @@ export class YourArticlesComponent implements OnInit {
     this.time = this.article.time;
   }
   viewArticle(article: string) {
-    this.router.navigate(['published', { id: article }]);
+    this.router.navigate(['published', article]);
   }
   goToArticle() {
     this.router.navigate(['article']);
