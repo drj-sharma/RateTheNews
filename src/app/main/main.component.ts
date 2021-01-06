@@ -71,7 +71,7 @@ export class MainComponent implements OnInit {
       });
   }
   viewArticle(articleId: string) {
-    this.router.navigate(['published', { id: articleId }]);
+    this.router.navigate(['published', articleId]);
   }
 
   onChange(value) {
